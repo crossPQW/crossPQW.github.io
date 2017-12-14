@@ -5,20 +5,20 @@
   
   <title>搬瓦工搭建 SS+多用户配置全攻略 | crossPQW</title>
   <meta name="viewport" content="width=device-width">
-  <meta name="description" content="前段时间自己购买的 ss 服务因为众所周知的原因无法使用，用习惯 Google 的再回头用 Baidu 简直像一坨废物，于是自己开始寻思动手搭建 ss 服务器。 ####安装 Shadowsocks ######VPS 选择首先我们需要一台虚拟服务器（VPS）， 我选择了搬瓦工，性价比较高，支持支付宝付款，支持 shadowsockets一键安装，对新手用户比较友好，最主要的是其口碑支持不错，不满">
+  <meta name="description" content="前段时间自己购买的 ss 服务因为众所周知的原因无法使用，用习惯 Google 的再回头用 Baidu 简直像一坨废物，于是自己开始寻思动手搭建 ss 服务器。 安装 ShadowsocksVPS 选择首先我们需要一台虚拟服务器（VPS）， 我选择了搬瓦工，性价比较高，支持支付宝付款，支持 shadowsockets一键安装，对新手用户比较友好，最主要的是其口碑支持不错，不满意了也可以退款。 套餐">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搬瓦工搭建 SS+多用户配置全攻略">
 <meta property="og:url" content="http://yoursite.com/2017/12/11/搬瓦工搭建 SS+多用户配置全攻略/index.html">
 <meta property="og:site_name" content="crossPQW">
-<meta property="og:description" content="前段时间自己购买的 ss 服务因为众所周知的原因无法使用，用习惯 Google 的再回头用 Baidu 简直像一坨废物，于是自己开始寻思动手搭建 ss 服务器。 ####安装 Shadowsocks ######VPS 选择首先我们需要一台虚拟服务器（VPS）， 我选择了搬瓦工，性价比较高，支持支付宝付款，支持 shadowsockets一键安装，对新手用户比较友好，最主要的是其口碑支持不错，不满">
+<meta property="og:description" content="前段时间自己购买的 ss 服务因为众所周知的原因无法使用，用习惯 Google 的再回头用 Baidu 简直像一坨废物，于是自己开始寻思动手搭建 ss 服务器。 安装 ShadowsocksVPS 选择首先我们需要一台虚拟服务器（VPS）， 我选择了搬瓦工，性价比较高，支持支付宝付款，支持 shadowsockets一键安装，对新手用户比较友好，最主要的是其口碑支持不错，不满意了也可以退款。 套餐">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-3b259b7f0cd2999d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-820187e122cc98df.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-4a02af454a0c091e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-796a0e8dcae27a61.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-12-14T15:09:18.589Z">
+<meta property="og:updated_time" content="2017-12-14T15:11:37.279Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搬瓦工搭建 SS+多用户配置全攻略">
-<meta name="twitter:description" content="前段时间自己购买的 ss 服务因为众所周知的原因无法使用，用习惯 Google 的再回头用 Baidu 简直像一坨废物，于是自己开始寻思动手搭建 ss 服务器。 ####安装 Shadowsocks ######VPS 选择首先我们需要一台虚拟服务器（VPS）， 我选择了搬瓦工，性价比较高，支持支付宝付款，支持 shadowsockets一键安装，对新手用户比较友好，最主要的是其口碑支持不错，不满">
+<meta name="twitter:description" content="前段时间自己购买的 ss 服务因为众所周知的原因无法使用，用习惯 Google 的再回头用 Baidu 简直像一坨废物，于是自己开始寻思动手搭建 ss 服务器。 安装 ShadowsocksVPS 选择首先我们需要一台虚拟服务器（VPS）， 我选择了搬瓦工，性价比较高，支持支付宝付款，支持 shadowsockets一键安装，对新手用户比较友好，最主要的是其口碑支持不错，不满意了也可以退款。 套餐">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/290760-3b259b7f0cd2999d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
@@ -76,21 +76,19 @@
 	<div class="entry-content">
 		
     	<p>前段时间自己购买的 ss 服务因为众所周知的原因无法使用，用习惯 Google 的再回头用 Baidu 简直像一坨废物，于是自己开始寻思动手搭建 ss 服务器。</p>
-<p>####安装 Shadowsocks</p>
-<p>######VPS 选择<br>首先我们需要一台虚拟服务器（VPS）， 我选择了<a href="https://bandwagonhost.com/index.php" target="_blank" rel="noopener">搬瓦工</a>，性价比较高，支持支付宝付款，支持 <code>shadowsockets</code>一键安装，对新手用户比较友好，最主要的是其口碑支持不错，不满意了也可以退款。</p>
+<h4 id="安装-Shadowsocks"><a href="#安装-Shadowsocks" class="headerlink" title="安装 Shadowsocks"></a>安装 Shadowsocks</h4><h6 id="VPS-选择"><a href="#VPS-选择" class="headerlink" title="VPS 选择"></a>VPS 选择</h6><p>首先我们需要一台虚拟服务器（VPS）， 我选择了<a href="https://bandwagonhost.com/index.php" target="_blank" rel="noopener">搬瓦工</a>，性价比较高，支持支付宝付款，支持 <code>shadowsockets</code>一键安装，对新手用户比较友好，最主要的是其口碑支持不错，不满意了也可以退款。</p>
 <h6 id="套餐选择"><a href="#套餐选择" class="headerlink" title="套餐选择"></a>套餐选择</h6><p>我自己选择的是<code>SPECIAL 20G KVM PROMO V3 - LOS ANGELES - CHINA DIRECT ROUTE</code>套餐，1G RAM，20G 硬盘，每个月2000G 流量，洛杉矶节点，国内直连，完全可以满足我的需求。年付$39,网上搜一下“搬瓦工优惠码”优惠完之后大概折合人民币252/Year左右。</p>
-<p>######安装 Shadowsocks Server<br>选择完合适的套餐、注册账号、付款之后，在网站底部点击<code>My Services</code>找到自己购买的服务可以在右边找到<code>KiwiVM Control Panel</code>管理面板的入口。</p>
+<h6 id="安装-Shadowsocks-Server"><a href="#安装-Shadowsocks-Server" class="headerlink" title="安装 Shadowsocks Server"></a>安装 Shadowsocks Server</h6><p>选择完合适的套餐、注册账号、付款之后，在网站底部点击<code>My Services</code>找到自己购买的服务可以在右边找到<code>KiwiVM Control Panel</code>管理面板的入口。</p>
 <p>进入KiwiVM 面板之后，我们可以看到如下页面：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/290760-3b259b7f0cd2999d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="kiwiVM.jpg"></p>
 <p>这里可以看到你的 VPS 所有信息，ip 地址、SSH 端口，运行状态，硬盘流量使用情况等等。<br>在左下角找到<code>Shadowsocks Server</code> 点击进去直接点击<code>Install Shadowsock Server</code>即可一键安装。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/290760-820187e122cc98df.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SS.jpg"></p>
 <p>安装完成后看到这里已经可以使用了，打开你的 SS 客户端，服务器地址为上上图中 <code>IP address</code>，加密方式、端口、密码复制到 SS 客户端中启动即可。</p>
-<p>####性能优化<br>这时候如果没有太多要求你可以正常访问 Google了，而且速度应该不会太慢，我自己的套餐支持 YouTube 1080P 视频播放。<br>但是我们并不满足，可以进一步优化<code>Shadowsocks</code>x 性能。</p>
-<p>######连接 VPS<br>我自己用的 MacBook Pro，推荐使用 iTerm2来代替系统自带的 Terminal 终端。<br>打开 iTerm按<code>Command + O</code> 选择<code>Edit Profile</code>,新建一个<code>Profile</code>，在<code>Command</code>中填写以下代码<br><code>ssh -A -p 1234 root@1.2.3.4</code><br>其中<code>1234</code>替换为你的搬瓦工 SSH Port，<code>1.2.3.4</code>替换为你的搬瓦工 IP Address。</p>
+<h4 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h4><p>这时候如果没有太多要求你可以正常访问 Google了，而且速度应该不会太慢，我自己的套餐支持 YouTube 1080P 视频播放。<br>但是我们并不满足，可以进一步优化<code>Shadowsocks</code>x 性能。</p>
+<h6 id="连接-VPS"><a href="#连接-VPS" class="headerlink" title="连接 VPS"></a>连接 VPS</h6><p>我自己用的 MacBook Pro，推荐使用 iTerm2来代替系统自带的 Terminal 终端。<br>打开 iTerm按<code>Command + O</code> 选择<code>Edit Profile</code>,新建一个<code>Profile</code>，在<code>Command</code>中填写以下代码<br><code>ssh -A -p 1234 root@1.2.3.4</code><br>其中<code>1234</code>替换为你的搬瓦工 SSH Port，<code>1.2.3.4</code>替换为你的搬瓦工 IP Address。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/290760-4a02af454a0c091e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="iterm.jpg"></p>
 <p>完成后选中新建的 Profile 点击<code>New Window</code>,此时会要求你输入root password，回到<code>KiwiVM面板</code>在左边找到<code>Root password modification</code>即可重置你的密码，重置完成后复制到刚才打开的 iTerm 窗口按<code>Enter</code>即可。</p>
-<p>######优化</p>
-<ul>
+<h6 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h6><ul>
 <li>在刚才打开的窗口中，输入如下代码：<br><code>vi /etc/sysctl.d/local.conf</code>创建配置文件。</li>
 <li>在打开的 vim 编辑器中，按 <code>i</code> 插入内容</li>
 <li>将以下内容复制进去</li>

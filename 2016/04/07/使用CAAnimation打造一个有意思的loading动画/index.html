@@ -5,17 +5,17 @@
   
   <title>使用CAAnimation打造一个有意思的loading动画 | crossPQW</title>
   <meta name="viewport" content="width=device-width">
-  <meta name="description" content="项目中遇到一个比较有意思的loading动画需求,最终效果如下:   ######分析相信很多人跟我一样第一眼被这张图欺骗了,以为是有一个实心圆在做缩放旋转的动画,其实仔细单独观察每个圆形,不难看出,这个loading只是由8个圆形规律的做放大缩小的动画,同时加上了透明度的变化达到了图中的效果,由此我们有了思路:8个圆形,scale animate + opacity animate. #####">
+  <meta name="description" content="项目中遇到一个比较有意思的loading动画需求,最终效果如下:   分析相信很多人跟我一样第一眼被这张图欺骗了,以为是有一个实心圆在做缩放旋转的动画,其实仔细单独观察每个圆形,不难看出,这个loading只是由8个圆形规律的做放大缩小的动画,同时加上了透明度的变化达到了图中的效果,由此我们有了思路:8个圆形,scale animate + opacity animate. 代码实现我尝试使用最基">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用CAAnimation打造一个有意思的loading动画">
 <meta property="og:url" content="http://yoursite.com/2016/04/07/使用CAAnimation打造一个有意思的loading动画/index.html">
 <meta property="og:site_name" content="crossPQW">
-<meta property="og:description" content="项目中遇到一个比较有意思的loading动画需求,最终效果如下:   ######分析相信很多人跟我一样第一眼被这张图欺骗了,以为是有一个实心圆在做缩放旋转的动画,其实仔细单独观察每个圆形,不难看出,这个loading只是由8个圆形规律的做放大缩小的动画,同时加上了透明度的变化达到了图中的效果,由此我们有了思路:8个圆形,scale animate + opacity animate. #####">
+<meta property="og:description" content="项目中遇到一个比较有意思的loading动画需求,最终效果如下:   分析相信很多人跟我一样第一眼被这张图欺骗了,以为是有一个实心圆在做缩放旋转的动画,其实仔细单独观察每个圆形,不难看出,这个loading只是由8个圆形规律的做放大缩小的动画,同时加上了透明度的变化达到了图中的效果,由此我们有了思路:8个圆形,scale animate + opacity animate. 代码实现我尝试使用最基">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-11f05afbb5ee073e.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-12-14T15:06:00.954Z">
+<meta property="og:updated_time" content="2017-12-14T15:14:40.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用CAAnimation打造一个有意思的loading动画">
-<meta name="twitter:description" content="项目中遇到一个比较有意思的loading动画需求,最终效果如下:   ######分析相信很多人跟我一样第一眼被这张图欺骗了,以为是有一个实心圆在做缩放旋转的动画,其实仔细单独观察每个圆形,不难看出,这个loading只是由8个圆形规律的做放大缩小的动画,同时加上了透明度的变化达到了图中的效果,由此我们有了思路:8个圆形,scale animate + opacity animate. #####">
+<meta name="twitter:description" content="项目中遇到一个比较有意思的loading动画需求,最终效果如下:   分析相信很多人跟我一样第一眼被这张图欺骗了,以为是有一个实心圆在做缩放旋转的动画,其实仔细单独观察每个圆形,不难看出,这个loading只是由8个圆形规律的做放大缩小的动画,同时加上了透明度的变化达到了图中的效果,由此我们有了思路:8个圆形,scale animate + opacity animate. 代码实现我尝试使用最基">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/290760-11f05afbb5ee073e.gif?imageMogr2/auto-orient/strip">
   
     <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
@@ -74,8 +74,8 @@
 		
     	<p>项目中遇到一个比较有意思的loading动画需求,最终效果如下: </p>
 <p><img src="http://upload-images.jianshu.io/upload_images/290760-11f05afbb5ee073e.gif?imageMogr2/auto-orient/strip" alt="screenShot.gif"></p>
-<p>######分析<br>相信很多人跟我一样第一眼被这张图欺骗了,以为是有一个实心圆在做缩放旋转的动画,其实仔细单独观察每个圆形,不难看出,这个loading只是由8个圆形规律的做放大缩小的动画,同时加上了透明度的变化达到了图中的效果,由此我们有了思路:8个圆形,scale animate + opacity animate.</p>
-<p>######代码实现<br>我尝试使用最基础的<code>CAAnimation</code>中api来完成想要的效果,由之前的思路,我们首先将缩放动画与透明渐变动画实现出来:  </p>
+<h6 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h6><p>相信很多人跟我一样第一眼被这张图欺骗了,以为是有一个实心圆在做缩放旋转的动画,其实仔细单独观察每个圆形,不难看出,这个loading只是由8个圆形规律的做放大缩小的动画,同时加上了透明度的变化达到了图中的效果,由此我们有了思路:8个圆形,scale animate + opacity animate.</p>
+<h6 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h6><p>我尝试使用最基础的<code>CAAnimation</code>中api来完成想要的效果,由之前的思路,我们首先将缩放动画与透明渐变动画实现出来:  </p>
 <ol>
 <li><strong>缩放</strong>.我们可以看出每个圆形的缩放比例是经历了 <code>1,0.4,1</code>这三个阶段,当然你也可以理解为<code>0.4,1,0.4</code>,至于为什么是0.4,仅仅是觉的比较好看Orz,并且我们定义动画完成一个循环需要的时间是1s. </li>
 <li><strong>透明渐变</strong>. 每个圆形的opacity属性经历了<code>1,0.3,1</code>这三个阶段,同上选中<code>0.3,1,0.3</code>也取决于你的喜好,同样的一个循环时间为1s. </li>
