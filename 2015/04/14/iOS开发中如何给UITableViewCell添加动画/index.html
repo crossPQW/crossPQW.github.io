@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS开发中如何给UITableViewCell添加动画 | crossPQW</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="UITableView可以说是iOS开发中最常用的控件了,作为一个高逼格的开发者,肯定不想局限于其平淡无奇的滚动效果,这时候我们就想着往上面倒腾出一些比较有意思的特效,下面来看看如何给UITableViewCell加特效!! 我们需要用到的代理方法: willDisplayCell,顾名思义,在cell即将显示的时候会调用此方法1- (void)tableView:(UITableView *)t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发中如何给UITableViewCell添加动画">
+<meta property="og:url" content="http://yoursite.com/2015/04/14/iOS开发中如何给UITableViewCell添加动画/index.html">
+<meta property="og:site_name" content="crossPQW">
+<meta property="og:description" content="UITableView可以说是iOS开发中最常用的控件了,作为一个高逼格的开发者,肯定不想局限于其平淡无奇的滚动效果,这时候我们就想着往上面倒腾出一些比较有意思的特效,下面来看看如何给UITableViewCell加特效!! 我们需要用到的代理方法: willDisplayCell,顾名思义,在cell即将显示的时候会调用此方法1- (void)tableView:(UITableView *)t">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-a352f58c248831e3.gif">
+<meta property="og:updated_time" content="2017-12-14T14:33:51.767Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS开发中如何给UITableViewCell添加动画">
+<meta name="twitter:description" content="UITableView可以说是iOS开发中最常用的控件了,作为一个高逼格的开发者,肯定不想局限于其平淡无奇的滚动效果,这时候我们就想着往上面倒腾出一些比较有意思的特效,下面来看看如何给UITableViewCell加特效!! 我们需要用到的代理方法: willDisplayCell,顾名思义,在cell即将显示的时候会调用此方法1- (void)tableView:(UITableView *)t">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/290760-a352f58c248831e3.gif">
+  
+    <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/">Home</a></li><li><a href="/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-iOS开发中如何给UITableViewCell添加动画" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2015/04/14/iOS开发中如何给UITableViewCell添加动画/" class="article-date">
+  <time datetime="2015-04-14T14:28:57.000Z" itemprop="datePublished">2015-04-14</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      iOS开发中如何给UITableViewCell添加动画
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>UITableView可以说是iOS开发中最常用的控件了,作为一个高逼格的开发者,肯定不想局限于其平淡无奇的滚动效果,这时候我们就想着往上面倒腾出一些比较有意思的特效,下面来看看如何给UITableViewCell加特效!!</p>
+<p>我们需要用到的代理方法:</p>
+<p>willDisplayCell,顾名思义,在cell即将显示的时候会调用此方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath</span><br></pre></td></tr></table></figure></p>
+<p>添加动画操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line"></span><br><span class="line">	SDShotCell *shotCell = (SDShotCell *) cell;</span><br><span class="line"></span><br><span class="line">	CABasicAnimation *scaleAnimation = [CABasicAnimation 	animationWithKeyPath:@&quot;transform&quot;];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.8, 0.8, 1)];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.toValue  = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1, 1, 1)];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];</span><br><span class="line"></span><br><span class="line">	[shotCell.layer addAnimation:scaleAnimation forKey:@&quot;transform&quot;];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大功告成,很简单的操作,有兴趣还可以研究更多地动效.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-a352f58c248831e3.gif" alt="271224350203657.gif"></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/01/swift的导入过程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          swift的导入过程
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2017 黄少华<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html>

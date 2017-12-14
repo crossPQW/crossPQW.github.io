@@ -44,58 +44,6 @@
     <div id="main">
       
   
-    <article id="post-iOS开发中如何给UITableViewCell添加动画" class="post">
-	<footer class="entry-meta-header">
-		<span class="meta-elements date">
-			<a href="/2017/12/14/iOS开发中如何给UITableViewCell添加动画/" class="article-date">
-  <time datetime="2017-12-14T14:28:57.000Z" itemprop="datePublished">2017-12-14</time>
-</a>
-		</span>
-		<span class="meta-elements author">黄少华</span>
-		<div class="commentscount">
-			
-		</div>
-	</footer>
-	
-	<header class="entry-header">
-		
-  
-    <h1 itemprop="name" class="entry-title">
-      <a class="article-title" href="/2017/12/14/iOS开发中如何给UITableViewCell添加动画/">iOS开发中如何给UITableViewCell添加动画</a>
-    </h1>
-  
-
-	</header>
-	<div class="entry-content">
-		
-    	<p>UITableView可以说是iOS开发中最常用的控件了,作为一个高逼格的开发者,肯定不想局限于其平淡无奇的滚动效果,这时候我们就想着往上面倒腾出一些比较有意思的特效,下面来看看如何给UITableViewCell加特效!!</p>
-<p>我们需要用到的代理方法:</p>
-<p>willDisplayCell,顾名思义,在cell即将显示的时候会调用此方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath</span><br></pre></td></tr></table></figure></p>
-<p>添加动画操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line"></span><br><span class="line">	SDShotCell *shotCell = (SDShotCell *) cell;</span><br><span class="line"></span><br><span class="line">	CABasicAnimation *scaleAnimation = [CABasicAnimation 	animationWithKeyPath:@&quot;transform&quot;];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.8, 0.8, 1)];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.toValue  = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1, 1, 1)];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];</span><br><span class="line"></span><br><span class="line">	[shotCell.layer addAnimation:scaleAnimation forKey:@&quot;transform&quot;];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>大功告成,很简单的操作,有兴趣还可以研究更多地动效.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/290760-a352f58c248831e3.gif" alt="271224350203657.gif"></p>
-
-    
-	</div>
-	<footer class="entry-footer">
-		<div class="entry-meta-footer">
-			<span class="category">
-				
-			</span>
-			<span class="tags">
-				
-			</span>
-		</div>
-	</footer>
-	
-</article>
-
-
-	<hr class="article-devider">
-
-
-
-  
     <article id="post-hello-world" class="post">
 	<footer class="entry-meta-header">
 		<span class="meta-elements date">
@@ -129,6 +77,115 @@
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
+    <article id="post-swift的导入过程" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/01/01/swift的导入过程/" class="article-date">
+  <time datetime="2016-01-01T01:45:45.000Z" itemprop="datePublished">2016-01-01</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/2016/01/01/swift的导入过程/">swift的导入过程</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>当我们新建一个xcode项目之后,我们可以在Swift里面导入任意Objective-C的Cocoa平台框架.</p>
+<p>任意Objective-C的框架或者一些C的类库将会作为一个<code>module(模块)</code>,直接导入到swift中,包括了所有的Objective-C系统的框架比如<code>Foundation</code>,<code>UIKit</code>还有<code>SpriteKit</code>等,就像系统支持公共的C类库.煮个栗子:如果我们想导入<code>Foundation</code>,只需要简单的添加import语句到我们写的Swift文件的顶部.</p>
+<pre><code>import Foundation //需要注意的是,swift没有头文件,实现与接口之间没有明显的划分,所以一个类中所有信息全部都存储在单独的.swift文件当中.
+</code></pre><p>这个import导入了所有Foundation的API,包括NSDate,NSURL,NSMutableDate,并且他们中所有的方法,属性和分类都可以在swift中直接调用.</p>
+<p>Objective-C(以下简称OC)在头文件里面声明API,而在swift中,这些头文件被编译成了OC中得<code>module</code>,然后被导入到swift中作为swift的API,导入决定了OC得<code>Function,class,Method</code>和<code>type</code>如何在swift中出现,对于<code>Function</code>和<code>Method</code>,这个过程影响他们的参数以及返回值.在导入的过程中可以做以下事情:</p>
+<ol>
+<li>重映射确定的OC类型到swift中得同等类型,就想id到AnyObject.</li>
+<li>重映射确定的OC核心类型到swift中得替代类型,比如NSString到String.</li>
+<li>重映射确定的OC概念到swift中相对应的概念,比如pointers到optionals.</li>
+</ol>
+<p><em>参考资料:The Swift Programming Language</em></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
+    <article id="post-iOS开发中如何给UITableViewCell添加动画" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2015/04/14/iOS开发中如何给UITableViewCell添加动画/" class="article-date">
+  <time datetime="2015-04-14T14:28:57.000Z" itemprop="datePublished">2015-04-14</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/2015/04/14/iOS开发中如何给UITableViewCell添加动画/">iOS开发中如何给UITableViewCell添加动画</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>UITableView可以说是iOS开发中最常用的控件了,作为一个高逼格的开发者,肯定不想局限于其平淡无奇的滚动效果,这时候我们就想着往上面倒腾出一些比较有意思的特效,下面来看看如何给UITableViewCell加特效!!</p>
+<p>我们需要用到的代理方法:</p>
+<p>willDisplayCell,顾名思义,在cell即将显示的时候会调用此方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath</span><br></pre></td></tr></table></figure></p>
+<p>添加动画操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line"></span><br><span class="line">	SDShotCell *shotCell = (SDShotCell *) cell;</span><br><span class="line"></span><br><span class="line">	CABasicAnimation *scaleAnimation = [CABasicAnimation 	animationWithKeyPath:@&quot;transform&quot;];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.8, 0.8, 1)];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.toValue  = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1, 1, 1)];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];</span><br><span class="line"></span><br><span class="line">	[shotCell.layer addAnimation:scaleAnimation forKey:@&quot;transform&quot;];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大功告成,很简单的操作,有兴趣还可以研究更多地动效.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-a352f58c248831e3.gif" alt="271224350203657.gif"></p>
 
     
 	</div>

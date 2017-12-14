@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>swift的导入过程 | crossPQW</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="当我们新建一个xcode项目之后,我们可以在Swift里面导入任意Objective-C的Cocoa平台框架. 任意Objective-C的框架或者一些C的类库将会作为一个module(模块),直接导入到swift中,包括了所有的Objective-C系统的框架比如Foundation,UIKit还有SpriteKit等,就像系统支持公共的C类库.煮个栗子:如果我们想导入Foundation,只需">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swift的导入过程">
+<meta property="og:url" content="http://yoursite.com/2016/01/01/swift的导入过程/index.html">
+<meta property="og:site_name" content="crossPQW">
+<meta property="og:description" content="当我们新建一个xcode项目之后,我们可以在Swift里面导入任意Objective-C的Cocoa平台框架. 任意Objective-C的框架或者一些C的类库将会作为一个module(模块),直接导入到swift中,包括了所有的Objective-C系统的框架比如Foundation,UIKit还有SpriteKit等,就像系统支持公共的C类库.煮个栗子:如果我们想导入Foundation,只需">
+<meta property="og:updated_time" content="2017-12-14T14:38:31.509Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="swift的导入过程">
+<meta name="twitter:description" content="当我们新建一个xcode项目之后,我们可以在Swift里面导入任意Objective-C的Cocoa平台框架. 任意Objective-C的框架或者一些C的类库将会作为一个module(模块),直接导入到swift中,包括了所有的Objective-C系统的框架比如Foundation,UIKit还有SpriteKit等,就像系统支持公共的C类库.煮个栗子:如果我们想导入Foundation,只需">
+  
+    <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/">Home</a></li><li><a href="/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-swift的导入过程" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/01/01/swift的导入过程/" class="article-date">
+  <time datetime="2016-01-01T01:45:45.000Z" itemprop="datePublished">2016-01-01</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      swift的导入过程
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>当我们新建一个xcode项目之后,我们可以在Swift里面导入任意Objective-C的Cocoa平台框架.</p>
+<p>任意Objective-C的框架或者一些C的类库将会作为一个<code>module(模块)</code>,直接导入到swift中,包括了所有的Objective-C系统的框架比如<code>Foundation</code>,<code>UIKit</code>还有<code>SpriteKit</code>等,就像系统支持公共的C类库.煮个栗子:如果我们想导入<code>Foundation</code>,只需要简单的添加import语句到我们写的Swift文件的顶部.</p>
+<pre><code>import Foundation //需要注意的是,swift没有头文件,实现与接口之间没有明显的划分,所以一个类中所有信息全部都存储在单独的.swift文件当中.
+</code></pre><p>这个import导入了所有Foundation的API,包括NSDate,NSURL,NSMutableDate,并且他们中所有的方法,属性和分类都可以在swift中直接调用.</p>
+<p>Objective-C(以下简称OC)在头文件里面声明API,而在swift中,这些头文件被编译成了OC中得<code>module</code>,然后被导入到swift中作为swift的API,导入决定了OC得<code>Function,class,Method</code>和<code>type</code>如何在swift中出现,对于<code>Function</code>和<code>Method</code>,这个过程影响他们的参数以及返回值.在导入的过程中可以做以下事情:</p>
+<ol>
+<li>重映射确定的OC类型到swift中得同等类型,就想id到AnyObject.</li>
+<li>重映射确定的OC核心类型到swift中得替代类型,比如NSString到String.</li>
+<li>重映射确定的OC概念到swift中相对应的概念,比如pointers到optionals.</li>
+</ol>
+<p><em>参考资料:The Swift Programming Language</em></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/14/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/04/14/iOS开发中如何给UITableViewCell添加动画/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          iOS开发中如何给UITableViewCell添加动画
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2017 黄少华<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html>
