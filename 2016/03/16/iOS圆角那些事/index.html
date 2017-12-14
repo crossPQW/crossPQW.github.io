@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS圆角那些事 | crossPQW</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="似乎没有那家公司比Apple更爱圆角了,事实上,圆角也会让图形/产品看起来更加无侵略性,能够带来更好的用户体验.iOS开发中各种圆角也随处可见,最简单给控件添加圆角的方式就是给视图的layer设置corner属性了:12self.blueView.layer.cornerRadius = 5.f;self.blueView.layer.masksToBounds = YES; 这种方式会带来两个问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS圆角那些事">
+<meta property="og:url" content="http://yoursite.com/2016/03/16/iOS圆角那些事/index.html">
+<meta property="og:site_name" content="crossPQW">
+<meta property="og:description" content="似乎没有那家公司比Apple更爱圆角了,事实上,圆角也会让图形/产品看起来更加无侵略性,能够带来更好的用户体验.iOS开发中各种圆角也随处可见,最简单给控件添加圆角的方式就是给视图的layer设置corner属性了:12self.blueView.layer.cornerRadius = 5.f;self.blueView.layer.masksToBounds = YES; 这种方式会带来两个问">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-bf139e23eb1e8ad4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-b118ec762f3d9188.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-14T14:44:28.960Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS圆角那些事">
+<meta name="twitter:description" content="似乎没有那家公司比Apple更爱圆角了,事实上,圆角也会让图形/产品看起来更加无侵略性,能够带来更好的用户体验.iOS开发中各种圆角也随处可见,最简单给控件添加圆角的方式就是给视图的layer设置corner属性了:12self.blueView.layer.cornerRadius = 5.f;self.blueView.layer.masksToBounds = YES; 这种方式会带来两个问">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/290760-bf139e23eb1e8ad4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/">Home</a></li><li><a href="/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-iOS圆角那些事" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/03/16/iOS圆角那些事/" class="article-date">
+  <time datetime="2016-03-16T07:34:35.000Z" itemprop="datePublished">2016-03-16</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      iOS圆角那些事
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>似乎没有那家公司比Apple更爱圆角了,事实上,圆角也会让图形/产品看起来更加无侵略性,能够带来更好的用户体验.<br>iOS开发中各种圆角也随处可见,最简单给控件添加圆角的方式就是给视图的layer设置corner属性了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.blueView.layer.cornerRadius = 5.f;</span><br><span class="line">self.blueView.layer.masksToBounds = YES;</span><br></pre></td></tr></table></figure></p>
+<p>这种方式会带来两个问题:  </p>
+<ul>
+<li><ol>
+<li>当图片数量比较多的时候,这种添加圆角方式特别消耗性能,比如在<code>UITableViewCell</code>添加过多圆角的话,甚至会带来视觉可见的卡顿.  </li>
+</ol>
+</li>
+<li><ol>
+<li>无法配置圆角数量(只能添加view的四个角全为圆角),无法配置某个圆角大小.   </li>
+</ol>
+</li>
+</ul>
+<p>第一个问题实际上是由于数量太多的情况下,系统会频繁的调用GPU的离屏渲染(Offscreen Rendering)机制,导致内存损耗严重.更多关于离屏渲染的详解,可以看<a href="http://objccn.io/issue-3-1/" target="_blank" rel="noopener">这里</a>,本文不多赘述.</p>
+<p>第二个问题,我们可以使用<code>UIBezierPath</code>来完美解决.以下是示例代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.blueView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft cornerRadii:CGSizeMake(20, 0)];</span><br><span class="line"></span><br><span class="line">CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];</span><br><span class="line">   </span><br><span class="line">maskLayer.frame = self.blueView.bounds;</span><br><span class="line"></span><br><span class="line">maskLayer.path = maskPath.CGPath;</span><br><span class="line"></span><br><span class="line">self.blueView.layer.mask = maskLayer;</span><br><span class="line"></span><br><span class="line">self.blueView.layer.cornerRadius = 5.f;</span><br><span class="line">self.blueView.layer.masksToBounds = YES;</span><br></pre></td></tr></table></figure></p>
+<p>想要配置某个角为圆角的话,只需要指定对应的<code>UIRectCorner</code>即可</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-bf139e23eb1e8ad4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="5.jpg"> </p>
+<p>以下是显示效果:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-b118ec762f3d9188.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.jpg"><br>你可以在这些下载这个<a href="https://github.com/crossPQW/iOS-corner" target="_blank" rel="noopener">demo</a></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+    <a href="/2016/04/15/iOS9新特性の3D-touch-上篇/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS9新特性の3D-touch-上篇
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/08/简明的集成touchID教程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          简明的集成touchID教程
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2017 黄少华<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html>

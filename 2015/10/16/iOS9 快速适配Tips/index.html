@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS9 快速适配Tips | crossPQW</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="Xcode7正式版发布之后,我们团队第一时间进行了升级体验,在确定没有重大bug之后,全体升级Xcode7,世界如此美好~~~但是升级之后还是遇到一些问题,把踩的坑小记一下.   #####1.Swift2.0语法更新之后编译不通过.当初为了学习中,我们项目中某个模块使用swift实现,现在想来这绝逼是最2的事情了,Xcode6以来,每次更新都随着语法的变动,每次看到编译后一堆红色警告都是心烦意">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS9 快速适配Tips">
+<meta property="og:url" content="http://yoursite.com/2015/10/16/iOS9 快速适配Tips/index.html">
+<meta property="og:site_name" content="crossPQW">
+<meta property="og:description" content="Xcode7正式版发布之后,我们团队第一时间进行了升级体验,在确定没有重大bug之后,全体升级Xcode7,世界如此美好~~~但是升级之后还是遇到一些问题,把踩的坑小记一下.   #####1.Swift2.0语法更新之后编译不通过.当初为了学习中,我们项目中某个模块使用swift实现,现在想来这绝逼是最2的事情了,Xcode6以来,每次更新都随着语法的变动,每次看到编译后一堆红色警告都是心烦意">
+<meta property="og:updated_time" content="2017-12-14T14:49:53.187Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS9 快速适配Tips">
+<meta name="twitter:description" content="Xcode7正式版发布之后,我们团队第一时间进行了升级体验,在确定没有重大bug之后,全体升级Xcode7,世界如此美好~~~但是升级之后还是遇到一些问题,把踩的坑小记一下.   #####1.Swift2.0语法更新之后编译不通过.当初为了学习中,我们项目中某个模块使用swift实现,现在想来这绝逼是最2的事情了,Xcode6以来,每次更新都随着语法的变动,每次看到编译后一堆红色警告都是心烦意">
+  
+    <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/">Home</a></li><li><a href="/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-iOS9 快速适配Tips" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2015/10/16/iOS9 快速适配Tips/" class="article-date">
+  <time datetime="2015-10-16T09:23:34.000Z" itemprop="datePublished">2015-10-16</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      iOS9 快速适配Tips
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p> Xcode7正式版发布之后,我们团队第一时间进行了升级体验,在确定没有重大bug之后,全体升级Xcode7,世界如此美好~~~<br>但是升级之后还是遇到一些问题,把踩的坑小记一下.  </p>
+<p>#####<strong>1.Swift2.0语法更新之后编译不通过</strong>.<br>当初为了学习中,我们项目中某个模块使用swift实现,现在想来这绝逼是最2的事情了,Xcode6以来,每次更新都随着语法的变动,每次看到编译后一堆红色警告都是心烦意乱.对应解决办法不难,修改代码即可.  </p>
+<p>#####<strong>2. Bitcode导致编译不通过问题</strong><br>在修改完swift代码之后,编辑报错如下:  </p>
+<blockquote>
+<p>xxx does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target.  </p>
+</blockquote>
+<p>Xcode7之后,默认开启Bitcode,但是引用的第三方库不支持啊,AppThinning始终是个美好的愿景啊,暂时可以通过修改<code>Build settings - Build Options - Enable Bitcode 改为NO</code>来解决.  </p>
+<p>#####<strong>3.Http request fail</strong><br>iOS9之后默认只支持更安全的HTTPS请求,我们公司暂时不支持HTTPS,我们可以来到info.plist里面添加一项来搞定它.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;</span><br><span class="line">&lt;dict&gt;</span><br><span class="line">    &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;</span><br><span class="line">    &lt;true/&gt;</span><br><span class="line">&lt;/dict&gt;</span><br></pre></td></tr></table></figure></p>
+<p>#####<strong>4.新字体导致UI问题</strong><br>新苹方字体个人很喜欢,小字体时观看对眼睛更友好,但是字体间距好像比以前稍微宽了一丢丢,导致UI出现了一丢丢问题,稍微注意一下Label宽度即可.</p>
+<p>#####<strong>5.键盘闪现bug</strong><br>应用内无缘无故弹出数字键盘,不知道哪里出问题了,stackoverflow查询之后发现是UIAlertview的问题,需要改为iOS8添加的UIAlertController,<a href="http://huangshaohua.cn/2015/07/24/ios8xin-te-xing-geng-you-ya-de-dan-chuang/" target="_blank" rel="noopener">(iOS8新特性—更优雅的弹窗)</a>,但是由于应用还要支持iOS7,这个问题不了了之,暂且记下.</p>
+<p>#####<strong>6. canOpenUrl机制改变导致无法跳转应用</strong><br>iOS9之后处于对用户隐私的考虑,对使用URLScheme跳转做了限制,只需要在info.plist里面<code>LSApplicationQueriesSchemes</code>字段下添加相应的UrlScheme即可正常跳转,白名单上限是50个.<br>常见白名单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"> &lt;key&gt;LSApplicationQueriesSchemes&lt;/key&gt;</span><br><span class="line">&lt;array&gt;</span><br><span class="line">    &lt;!-- 微信 URL Scheme 白名单--&gt;</span><br><span class="line">    &lt;string&gt;wechat&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;weixin&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 新浪微博 URL Scheme 白名单--&gt;</span><br><span class="line">    &lt;string&gt;sinaweibohd&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;sinaweibo&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;sinaweibosso&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;weibosdk&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;weibosdk2.5&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- QQ、Qzone URL Scheme 白名单--&gt;</span><br><span class="line">    &lt;string&gt;mqqapi&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqq&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqOpensdkSSoLogin&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqconnect&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkdataline&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkgrouptribeshare&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkfriend&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkapi&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkapiV2&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkapiV3&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneopensdk&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;wtloginmqq&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;wtloginmqq2&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqwpa&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzone&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzonev2&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneshare&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;wtloginqzone&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzonewx&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneopensdkapiV2&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneopensdkapi19&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneopensdkapi&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneopensdk&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 支付宝  URL Scheme 白名单--&gt;</span><br><span class="line">    &lt;string&gt;alipay&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;alipayshare&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;/array&gt;</span><br></pre></td></tr></table></figure></p>
+<p><em>PS:哪位仁兄应用里面添加了50个url scheme让我来膜拜一下</em></p>
+<p>#####<strong>7.约束leading与training导致的崩溃</strong><br>iOS9以前<code>leading</code>与<code>training</code>基本可以理解为<code>left</code>与<code>right</code>,但是iOS9之后不是了,貌似说增加了某些国家文字支持,是从右往左导致<code>leading</code>与<code>training</code>与<code>left</code>跟right相反了(求证实),我在使用<code>Masonry</code>添加约束的时候已经全用<code>left</code>于<code>right</code>替换.  </p>
+<p>#####<strong>8.preferredLanguages导致应用默认为英文的bug</strong><br>哈哈哈哈更新iOS9之后微信跟微博第一时间中枪了…..<br>嗯嗯,严肃.<br>iOS9正式版之后<code>[NSLocale preferredLanguages]</code>返回的当前语言后面加了所在国家后缀,比如中国地<code>zh-Hans</code>变成了<code>zh-Hans-CN</code>,这时候使用返回值的前缀做国际化适配即可.<br>例如<code>if ([currentLanguage hasPrefix:@&quot;zh-Hans&quot;])</code>  </p>
+<p>差不多就酱,遇到啥新问题再记下来^_^<br>每次升级都是一堆坑,求一家最低支持iOS9设备的公司Orz……</p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/01/swift的导入过程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          swift的导入过程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/04/14/iOS开发中如何给UITableViewCell添加动画/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          iOS开发中如何给UITableViewCell添加动画
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2017 黄少华<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html>

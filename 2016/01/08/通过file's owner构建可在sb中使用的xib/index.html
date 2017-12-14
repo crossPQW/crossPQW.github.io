@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>通过file&#39;s owner构建可在sb中使用的xib | crossPQW</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="首先上源码github地址 首先新建一个xib,命名为TestView.xib,一个class类名为TestView. 然后简单的在xib中添加一个背景图,一个UILabel用来展示,并且设置好约束. 常规我们使用xib的话通常会把TestView.swift类绑定为这个xib,为了能够在其他的storyboard中我们换一种方式,指定xib的file’s owner为该类,这样的话我们还可以在s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过file&#39;s owner构建可在sb中使用的xib">
+<meta property="og:url" content="http://yoursite.com/2016/01/08/通过file's owner构建可在sb中使用的xib/index.html">
+<meta property="og:site_name" content="crossPQW">
+<meta property="og:description" content="首先上源码github地址 首先新建一个xib,命名为TestView.xib,一个class类名为TestView. 然后简单的在xib中添加一个背景图,一个UILabel用来展示,并且设置好约束. 常规我们使用xib的话通常会把TestView.swift类绑定为这个xib,为了能够在其他的storyboard中我们换一种方式,指定xib的file’s owner为该类,这样的话我们还可以在s">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-f1dbad5a6c043dca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-515322947dcfd425.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-c3ebb7c17fbd90a9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-2be3f10dc5381164.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-dafb9a543a0ddede.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-25444248ada99b06.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-14T14:53:12.225Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通过file&#39;s owner构建可在sb中使用的xib">
+<meta name="twitter:description" content="首先上源码github地址 首先新建一个xib,命名为TestView.xib,一个class类名为TestView. 然后简单的在xib中添加一个背景图,一个UILabel用来展示,并且设置好约束. 常规我们使用xib的话通常会把TestView.swift类绑定为这个xib,为了能够在其他的storyboard中我们换一种方式,指定xib的file’s owner为该类,这样的话我们还可以在s">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/290760-f1dbad5a6c043dca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/">Home</a></li><li><a href="/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-通过file&#39;s owner构建可在sb中使用的xib" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/01/08/通过file's owner构建可在sb中使用的xib/" class="article-date">
+  <time datetime="2016-01-08T02:23:34.000Z" itemprop="datePublished">2016-01-08</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      通过file&#39;s owner构建可在sb中使用的xib
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>首先上<a href="https://github.com/crossPQW/useXibInSb/tree/master" target="_blank" rel="noopener">源码github地址</a></p>
+<p>首先新建一个xib,命名为TestView.xib,一个class类名为TestView.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-f1dbad5a6c043dca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="10.jpg"><br>然后简单的在xib中添加一个背景图,一个UILabel用来展示,并且设置好约束.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-515322947dcfd425.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="11.jpg"><br>常规我们使用xib的话通常会把TestView.swift类绑定为这个xib,为了能够在其他的storyboard中我们换一种方式,指定xib的file’s owner为该类,这样的话我们还可以在storyboard中像view controller构建的xib那样拖线了,而viewcontroller正是其内部view的file’s owner,这里的思路正是借鉴了这个.</p>
+<p>选中file’s owner选项在右边面板里面绑定为自定义的xib.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-c3ebb7c17fbd90a9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="12.jpg"><br>下面则是关键部分了,为了能够在storyboard中以及正常我们通过init方法初始化的时候正常使用这个xib,我们需要复写两个方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">init(frame: CGRect)</span><br><span class="line">init?(coder aDecoder: NSCoder)</span><br></pre></td></tr></table></figure>
+<p>正常我们使用init构造方法初始化的时候,会调用<code>init(frame: CGRect)</code>,而xib跟storyboard的本质是xml文件,所以往下会调用<code>init?(coder aDecoder: NSCoder)</code>方法.</p>
+<p>在这两个方法中实现setup()方法即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">func setup()&#123;</span><br><span class="line">    </span><br><span class="line">    let bundle = NSBundle(forClass: self.dynamicType)</span><br><span class="line">    let nib    = UINib(nibName: &quot;TestView&quot;, bundle: bundle)</span><br><span class="line">    </span><br><span class="line">    view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView</span><br><span class="line">    </span><br><span class="line">    view.frame = bounds</span><br><span class="line">            </span><br><span class="line">    addSubview(view)</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样我们在storyboard中随便拖一个view,只要指定这个view的Class为TestView即可.    </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-2be3f10dc5381164.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="13.jpg"><br>除此之外,并不需要在storyboard中做任何操作,运行之后,OK,正是我们想要的效果.   </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-dafb9a543a0ddede.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="14.jpg">  </p>
+<p>#####Extension:我们还使用<code>@IBInspectable</code>对xib进行可视化编辑<br>我们先把背景图与文字拖为属性,然后使用<code>@IBInspectable</code>设置其get与set方法即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@IBOutlet weak var bgimage: UIImageView!</span><br><span class="line"></span><br><span class="line">@IBOutlet weak var topicTitle: UILabel!</span><br><span class="line"></span><br><span class="line">@IBInspectable var backgroundImage :UIImage&#123;</span><br><span class="line">    get&#123;</span><br><span class="line">        return bgimage.image!</span><br><span class="line">    &#125;</span><br><span class="line">    set&#123;</span><br><span class="line">        bgimage.image = newValue</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@IBInspectable var title: NSString&#123;</span><br><span class="line">    get&#123;</span><br><span class="line">        return topicTitle.text!</span><br><span class="line">    &#125;</span><br><span class="line">    set&#123;</span><br><span class="line">        topicTitle.text = newValue as String</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>OK,这里我们再通过storyboard中使用的时候就更方便了,直接进行属性的设置<br>如图:  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-25444248ada99b06.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15.jpg"></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/08/iOS8新特性---更优雅的弹窗/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS8新特性---更优雅的弹窗
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/01/swift的导入过程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          swift的导入过程
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2017 黄少华<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html>

@@ -44,11 +44,11 @@
     <div id="main">
       
   
-    <article id="post-hello-world" class="post">
+    <article id="post-iOS9新特性の3D-touch-下篇" class="post">
 	<footer class="entry-meta-header">
 		<span class="meta-elements date">
-			<a href="/2017/12/14/hello-world/" class="article-date">
-  <time datetime="2017-12-14T13:40:10.633Z" itemprop="datePublished">2017-12-14</time>
+			<a href="/2016/04/15/iOS9新特性の3D-touch-下篇/" class="article-date">
+  <time datetime="2016-04-15T08:43:34.000Z" itemprop="datePublished">2016-04-15</time>
 </a>
 		</span>
 		<span class="meta-elements author">黄少华</span>
@@ -61,22 +61,452 @@
 		
   
     <h1 itemprop="name" class="entry-title">
-      <a class="article-title" href="/2017/12/14/hello-world/">Hello World</a>
+      <a class="article-title" href="/2016/04/15/iOS9新特性の3D-touch-下篇/">iOS9新特性の3D-touch-下篇</a>
     </h1>
   
 
 	</header>
 	<div class="entry-content">
 		
-    	<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+    	<p>再看一下如何在应用内集成3Dtouch.<br>3D-touch操作分为轻按<code>peek</code>跟重按<code>pop</code>,根据apple官方设计规范,一般来说<code>peek</code>呼出预览视图,我在storyboard里面创建一个<code>PreviewController</code>用于描述呼出的预览视图,同时创建了一个<code>DetailViewController</code>用于显示最终显示的视图,同时我们应该注意,<code>pop</code>之后的视图应该与用户正常点击进去之后没有任何区别.<br>此时我们应用层级为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tableView---(peek)----&gt;previewController---(pop)---&gt;DetailviewController</span><br></pre></td></tr></table></figure></p>
+<p>无论何时,我们在使用3D-touch的时候应当先检查3D-touch的可用性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)check3Dtouch</span><br><span class="line">&#123;</span><br><span class="line">    //检测3Dtouch是否可用,若可用注册预览视图代理</span><br><span class="line">    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) &#123;</span><br><span class="line">        [self registerForPreviewingWithDelegate:self sourceView:self.view];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们在viewWillAppear里面和用户进行3D-touch相关设置的时候都要检查可用性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewWillAppear:(BOOL)animated</span><br><span class="line">&#123;</span><br><span class="line">    [super viewWillAppear:animated];</span><br><span class="line">    </span><br><span class="line">    [self check3Dtouch];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">///用户可能进入设置开启/关闭3Dtouch的时候,在这里需要再次检测3Dtouch可用性</span><br><span class="line">- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection</span><br><span class="line">&#123;</span><br><span class="line">    [self check3Dtouch];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>别忘了设置<code>UIViewControllerPreviewingDelegate</code>预览视图代理.</p>
+<p>接下来只需要在对应的代理方法里面返回相应的控制器即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (UIViewController *)previewingContext:(id&lt;UIViewControllerPreviewing&gt;)previewingContext viewControllerForLocation:(CGPoint)location&#123;</span><br><span class="line">    </span><br><span class="line">    if ([self.presentedViewController isKindOfClass:[PreviewViewController class]]) &#123;return nil;&#125;</span><br><span class="line">    </span><br><span class="line">    UIStoryboard *sb = [UIStoryboard storyboardWithName:@&quot;Main&quot; bundle:nil];</span><br><span class="line">    PreviewViewController *previewController = [sb instantiateViewControllerWithIdentifier:@&quot;preview&quot;];</span><br><span class="line">    </span><br><span class="line">    location = CGPointMake(10, 100);</span><br><span class="line">    return previewController;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)previewingContext:(id&lt;UIViewControllerPreviewing&gt;)previewingContext commitViewController:(UIViewController *)viewControllerToCommit&#123;</span><br><span class="line">    </span><br><span class="line">    UIStoryboard *sb = [UIStoryboard storyboardWithName:@&quot;Main&quot; bundle:nil];</span><br><span class="line">    DetailViewController *detailView = [sb instantiateViewControllerWithIdentifier:@&quot;detailView&quot;];</span><br><span class="line">    </span><br><span class="line">    [self showViewController:detailView sender:self];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此时<code>peek</code>跟<code>pop</code>手势都已经集成完毕,这时候还想实现类似在preview下面添加alert的操作,如系统message里面的快捷回复</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-7bc6dc52f175f6af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="8.png"><br>其实只需要在previewController里面实现<code>- (NSArray&lt;id&lt;UIPreviewActionItem&gt;&gt; *)previewActionItems</code>方法即可.<br><em>PS:在xcode6.3时OC添加了制定数组元组类型的功能,有利于写出更加严谨的代码,好评~</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">- (NSArray&lt;id&lt;UIPreviewActionItem&gt;&gt; *)previewActionItems</span><br><span class="line">&#123;</span><br><span class="line">    UIPreviewAction *action1 = [UIPreviewAction actionWithTitle:@&quot;action1&quot; style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</span><br><span class="line">        NSLog(@&quot;action1 click&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:@&quot;action2&quot; style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</span><br><span class="line">        NSLog(@&quot;action2 click&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    UIPreviewAction *action3 = [UIPreviewAction actionWithTitle:@&quot;action3&quot; style:UIPreviewActionStyleSelected handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</span><br><span class="line">        NSLog(@&quot;action3 click&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    UIPreviewActionGroup *group1 = [UIPreviewActionGroup actionGroupWithTitle:@&quot;group1&quot; style:UIPreviewActionStyleDefault actions:@[action1,action2]];</span><br><span class="line">    UIPreviewActionGroup *group2 = [UIPreviewActionGroup actionGroupWithTitle:@&quot;group2&quot; style:UIPreviewActionStyleDestructive actions:@[action1,action3]];</span><br><span class="line">    UIPreviewActionGroup *group3 = [UIPreviewActionGroup actionGroupWithTitle:@&quot;group3&quot; style:UIPreviewActionStyleSelected actions:@[action2,action3]];</span><br><span class="line">    </span><br><span class="line">//    NSArray *items = @[action1,action2,action3];</span><br><span class="line">//    NSArray *items = @[group1,group2,group3];</span><br><span class="line">    NSArray *items = @[action1,group1,action2,group2,action3,group3];</span><br><span class="line">    return items;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有兴趣的话可以自己动手体会一下<code>UIPreviewActionGroup</code>与<code>UIPreviewAction</code>的区别.</p>
+<p><a href="https://github.com/crossPQW/3d-touch-demo" target="_blank" rel="noopener">你可以在github下载到此源码</a></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
+    <article id="post-iOS9新特性の3D-touch-上篇" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/04/15/iOS9新特性の3D-touch-上篇/" class="article-date">
+  <time datetime="2016-04-15T07:34:35.000Z" itemprop="datePublished">2016-04-15</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/2016/04/15/iOS9新特性の3D-touch-上篇/">iOS9新特性の3D-touch-上篇</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<blockquote>
+<p>iPhone6s&amp;iPhone 6s plus发布也有一段时间了,最大的亮点应该就是3D-touch毋庸置疑了,第一时间体验了之后最大的感受就是苹果爸爸太给力了…….事实上我也从未见过第二家公司能把科技与易用性结合的如此天衣无缝的,当年5s指纹识别如此,今年的3D-touch亦如此.苹果也开放了相关的api,作为一个开发者怎能不第一时间在自己的应用上面集成这个好玩的特性呢.</p>
+</blockquote>
+<p>应用中使用3Dtouch有两种方式:  </p>
+<ul>
+<li>第一种是按压图标启动应用的时候,类似于pc上面的右键,但是又不同于右键,我们可以把它理解为一个快速入口,能够有效的减少用户的操作量.这里我们只能使用轻按手势<code>shortCut</code>.  </li>
+<li>第二种则是应用内的集成了,比如短信列表我们可以轻按预览短信内容,发现感兴趣的话再稍微用力进入详情页面,事实上目前大多数集成了3Dtouch的app也大多数是应用在这个使用场景,即在list-detail之间加了一层预览,变成了list-preview-detail.</li>
+</ul>
+<p>上篇先写一下第一种场景如何集成.<br>这时候我们的所有代码都是在app delegate里面完成的,当然我们也可以写一个分类方便给app delegate瘦身.</p>
+<p>######在app delegate的代理方法didFinishLaunchingWithOptions里面做如下操作:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    ///setup icons</span><br><span class="line">    UIApplicationShortcutIcon *icon1 = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeCompose];</span><br><span class="line">    UIApplicationShortcutIcon *icon2 = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeLocation];</span><br><span class="line">    UIApplicationShortcutIcon *icon3 = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypePause];</span><br><span class="line">    UIApplicationShortcutIcon *icon4 = [UIApplicationShortcutIcon iconWithTemplateImageName:@&quot;favicon.png&quot;];</span><br><span class="line">    </span><br><span class="line">    ///setup items</span><br><span class="line">    UIMutableApplicationShortcutItem *item1 = [[UIMutableApplicationShortcutItem alloc] initWithType:@&quot;first&quot; localizedTitle:@&quot;first item title&quot; localizedSubtitle:@&quot;first item detail title&quot; icon:icon1 userInfo:nil];</span><br><span class="line">    UIMutableApplicationShortcutItem *item2 = [[UIMutableApplicationShortcutItem alloc] initWithType:@&quot;second&quot; localizedTitle:@&quot;second item title&quot; localizedSubtitle:@&quot;second item detail title&quot; icon:icon2 userInfo:nil];</span><br><span class="line">    UIMutableApplicationShortcutItem *item3 = [[UIMutableApplicationShortcutItem alloc] initWithType:@&quot;third&quot; localizedTitle:@&quot;third item title&quot; localizedSubtitle:@&quot;third item detail title&quot; icon:icon3 userInfo:nil];</span><br><span class="line">    UIMutableApplicationShortcutItem *item4 = [[UIMutableApplicationShortcutItem alloc] initWithType:@&quot;forth&quot; localizedTitle:@&quot;forth item title&quot; localizedSubtitle:@&quot;forth item detail title&quot; icon:icon4 userInfo:nil];</span><br><span class="line">    </span><br><span class="line">    NSArray *items = @[item1,item2,item3,item4];</span><br><span class="line">    </span><br><span class="line">    [UIApplication sharedApplication].shortcutItems = items ;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    UIApplicationShortcutItem *item = [launchOptions valueForKey:UIApplicationLaunchOptionsShortcutItemKey];</span><br><span class="line">    if (item) &#123;</span><br><span class="line">        NSLog(@&quot;3d launch item is %@&quot;,item.localizedTitle);</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        NSLog(@&quot;normal launch&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代码还是非常简单的,就是创建四个图标,然后创建四个item,然后给shortcutItems赋值一个数组就可以了.<br>需要注意的是,使用了<code>iconWithTemplateImageName</code>方法创建的自定义的图标需要是正方形,单色,而且35*35point尺寸的,不然会显示下面效果图那种黑漆漆的效果.</p>
+<blockquote>
+<p>Icons should be square, single color, and 35x35 points  </p>
+</blockquote>
+<p>而我们如果想监听是从哪个item启动的应用,可以在以下方法里面操作:</p>
+<pre><code>- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
+{
+    NSLog(@&quot;selected item&apos;s title is %@&quot;,shortcutItem.description);
+}
+</code></pre><p>可以看到打印信息:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-f9e486885307b47e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="6.jpg"><br>所以这里我们就可以通过shortcutItem.type来判断从哪个入口进入的了,所以我们在调用<code>- (instancetype _Nonnull)initWithType:(NSString * _Nonnull)type localizedTitle:(NSString * _Nonnull)localizedTitle localizedSubtitle:(NSString * _Nullable)localizedSubtitle icon:(UIApplicationShortcutIcon * _Nullable)icon userInfo:(NSDictionary * _Nullable)userInfo</code>初始化item的时候,可以自定义一个枚举来作为type参数,方便以后判断. </p>
+<p>最终效果如下:  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-219f269a051fe040.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="7.jpg"><br><a href="https://github.com/crossPQW/3d-touch-demo" target="_blank" rel="noopener">你可以在这里下载这个demo</a></p>
+<p><del>一个问题:<br>微信实现的图标居右是如何实现的呢?因为没有找到相关的api,难道是通过runtime来修改title跟icon的frame来做到的?</del><br>好傻逼的问题,突然发现图片左右是取决于图标在屏幕上的问题……..草草草草草</p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
+    <article id="post-iOS圆角那些事" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/03/16/iOS圆角那些事/" class="article-date">
+  <time datetime="2016-03-16T07:34:35.000Z" itemprop="datePublished">2016-03-16</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/2016/03/16/iOS圆角那些事/">iOS圆角那些事</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>似乎没有那家公司比Apple更爱圆角了,事实上,圆角也会让图形/产品看起来更加无侵略性,能够带来更好的用户体验.<br>iOS开发中各种圆角也随处可见,最简单给控件添加圆角的方式就是给视图的layer设置corner属性了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.blueView.layer.cornerRadius = 5.f;</span><br><span class="line">self.blueView.layer.masksToBounds = YES;</span><br></pre></td></tr></table></figure></p>
+<p>这种方式会带来两个问题:  </p>
+<ul>
+<li><ol>
+<li>当图片数量比较多的时候,这种添加圆角方式特别消耗性能,比如在<code>UITableViewCell</code>添加过多圆角的话,甚至会带来视觉可见的卡顿.  </li>
+</ol>
+</li>
+<li><ol>
+<li>无法配置圆角数量(只能添加view的四个角全为圆角),无法配置某个圆角大小.   </li>
+</ol>
+</li>
+</ul>
+<p>第一个问题实际上是由于数量太多的情况下,系统会频繁的调用GPU的离屏渲染(Offscreen Rendering)机制,导致内存损耗严重.更多关于离屏渲染的详解,可以看<a href="http://objccn.io/issue-3-1/" target="_blank" rel="noopener">这里</a>,本文不多赘述.</p>
+<p>第二个问题,我们可以使用<code>UIBezierPath</code>来完美解决.以下是示例代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.blueView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft cornerRadii:CGSizeMake(20, 0)];</span><br><span class="line"></span><br><span class="line">CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];</span><br><span class="line">   </span><br><span class="line">maskLayer.frame = self.blueView.bounds;</span><br><span class="line"></span><br><span class="line">maskLayer.path = maskPath.CGPath;</span><br><span class="line"></span><br><span class="line">self.blueView.layer.mask = maskLayer;</span><br><span class="line"></span><br><span class="line">self.blueView.layer.cornerRadius = 5.f;</span><br><span class="line">self.blueView.layer.masksToBounds = YES;</span><br></pre></td></tr></table></figure></p>
+<p>想要配置某个角为圆角的话,只需要指定对应的<code>UIRectCorner</code>即可</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-bf139e23eb1e8ad4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="5.jpg"> </p>
+<p>以下是显示效果:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-b118ec762f3d9188.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.jpg"><br>你可以在这些下载这个<a href="https://github.com/crossPQW/iOS-corner" target="_blank" rel="noopener">demo</a></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
+    <article id="post-简明的集成touchID教程" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/03/08/简明的集成touchID教程/" class="article-date">
+  <time datetime="2016-03-08T07:54:45.000Z" itemprop="datePublished">2016-03-08</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/2016/03/08/简明的集成touchID教程/">简明的集成touchID教程</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>iOS指纹验证API的开放给了我们应用更多的可能性,touchID的API使用起来也特别的简单,接下来我做了一个小demo来集成了touchID,直接把步骤贴出来.</p>
+<p>导入指纹识别的framework,在你的工程中导入<code>LocalAuthentication.framework</code>,并引入头文件.<code>#import &lt;LocalAuthentication/LocalAuthentication.h&gt;</code></p>
+<p>首先需要获取到LocalAuthentication上下文:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//使用之前,需要先获取上下文.</span><br><span class="line">    LAContext *context = [[LAContext alloc] init];</span><br></pre></td></tr></table></figure></p>
+<p>然后必须要先检查指纹识别是否可用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">NSError *error;</span><br><span class="line">if (![context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&amp;error]) &#123;</span><br><span class="line">    NSLog(@&quot;error:%@&quot;,error.localizedDescription);</span><br><span class="line"></span><br><span class="line">    return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>调取touchID的API:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@&quot;请验证您的指纹&quot; reply:^(BOOL success, NSError *authenticationError) &#123;</span><br><span class="line">       </span><br><span class="line">      dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">          </span><br><span class="line">          if (success) &#123;</span><br><span class="line">              NSLog(@&quot;success&quot;);</span><br><span class="line">          &#125;else&#123;</span><br><span class="line">              NSLog(@&quot;error == :%@&quot;,authenticationError);</span><br><span class="line">          &#125;</span><br><span class="line">       </span><br><span class="line">          </span><br><span class="line">      &#125;) ;</span><br><span class="line">   &#125;];</span><br></pre></td></tr></table></figure></p>
+<p>最终效果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-c9abd93525ccb4c2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.jpg"><br><a href="https://github.com/crossPQW/UIAlertController/tree/master" target="_blank" rel="noopener">demo地址</a></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
+    <article id="post-git问题记录--如何从从detached HEAD状态解救出来" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/01/16/git问题记录--如何从从detached HEAD状态解救出来/" class="article-date">
+  <time datetime="2016-01-16T09:23:34.000Z" itemprop="datePublished">2016-01-16</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/2016/01/16/git问题记录--如何从从detached HEAD状态解救出来/">git问题记录--如何从从detached HEAD状态解救出来</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>今天使用git的时候在终端发现这样一条信息<br><code>HEAD detached at head</code></p>
+<p>##<strong>分析</strong><br>心里一惊,艾玛这是什么状态?<br>其实我们知道,<code>git checkout</code>本质上是修改HEAD里面的内容来让它指向不同分支的,而HEAD文件指向的分支就是我们当前的分支,但是有时候HEAD不会指向任何分支,严谨的说是HEAD指向了一个没有分支名字的修订版本,此时恭喜你,已经处于游离状态了(detached HEAD).这时候我们在进行commit操作不会提交到任何分支上去.  </p>
+<p>这个时候输入<code>git status</code>查看当前状态发现我没有在任何本地分支上也验证了刚才的猜想,而这时候我又作死的进行了commit操作,git提示我</p>
+<pre><code>Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  fef4501 interrationRecord page completed
+
+If you want to keep them by creating a new branch, this may be a good time
+to do so with:
+
+ git branch &lt;new-branch-name&gt; fef4501
+</code></pre><p>然后我欢天喜地的<code>git checkout ask_11_16</code>切换到工作分支以为万事大吉,艾玛坑爹啊,我特么辛辛苦苦写了一天的代码呢?不过这时候我们回看上面那段提示,智能的git告诉我如果我还想要这次提交的话,可以创建一个新的分支,同时把本次提交的id告诉了我:<code>fef4501</code>.<br>那么这时候我已经有了一个思路:</p>
+<ol>
+<li>基于本次提交创建一个临时分支.</li>
+<li>然后merge到我当前工作分支.</li>
+<li>删除临时分支  </li>
+</ol>
+<p>##<strong>实操</strong></p>
+<p>####基于本次提交创建临时分支<br>输入<br><code>$git branch temp fef4501</code><br>使用git branch 分支名 操作ID 这句命令能够创建一个新的分支,但要注意此时我们还没有切换到这个分支上,这个分支上面代码跟我刚才提交完之后的一样.</p>
+<p>####切换到工作分支并合并代码<br>输入<br><code>$git checkout ask_11_16</code><br>意味着我已经切换到ask_11_16分支,这个分支是我之前想要提交的分支.<br>然后<br><code>$git merge temp</code><br>这行命令过后我们已经上次commit合并到ask_11_16上了,此时终端状态为<br><code>Your branch is ahead of &#39;origin/ask_11_16&#39; by 1 commit.</code><br>我们只需要<code>$git push</code>即可把本次提交push到远程分支.<br>这时候检查代码,perfect!正式我们想要的状态.</p>
+<p>####删除temp分支<br>大功告成,至于temp分支已经没有了利用价值,本着过河拆桥的精神我不得不输入<br><code>$git branch -d temp</code><br>来删除temp分支. </p>
+<p><em>git是一个很优秀的版本控制工具,利用得当能让我们在团队协作时候如鱼得水,但是万一有操作失误,也会让很多不熟悉git命令的人各种发愁,下面贴一个git命令大全,非常实用</em></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-e8491f69473bf200.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="9.jpg"></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
+    <article id="post-给项目中所有xib添加圆角:borderColor等属性" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/01/09/给项目中所有xib添加圆角:borderColor等属性/" class="article-date">
+  <time datetime="2016-01-09T03:52:46.000Z" itemprop="datePublished">2016-01-09</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/2016/01/09/给项目中所有xib添加圆角:borderColor等属性/">给项目中所有xib添加圆角/borderColor等属性</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<blockquote>
+<p>废话不多,先上<a href="https://github.com/crossPQW/addCornerRadiusForAllXib" target="_blank" rel="noopener">github地址</a>,不想看啰嗦的话,直接把项目中<code>UIView+CornerRadius</code>分类导入到自己项目中即可,不需要其他任何操作.    </p>
+</blockquote>
+<p>使用xib+storyboard开发能够极大的提高开发效率发展到现在这点应该没有什么异议了,如果还有禁止使用这些东西的公司我觉的可以考虑辞职了……<br>但是有一些属性再系统默认的设置面板里面我们并不能找到,最常用的就是<code>layer.borderWidth,layer.cornerRadius,layer.borderColor</code>这三个属性了,之前都是手动在runtime属性里面手动添加,比如: </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-668e169e3a2b8ec8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="16.jpg"><br>但是每次用都要加上去未免太过麻烦,于是就在想能不能有个好的方式代替这种繁琐的操作,后来发现现在oc有了新的关键字就是来做这个事情的:<code>IBInspectable</code></p>
+<p>######基础版<br>在给你用的那个xib添加对应属性,加上<code>IBInspectable</code>关键字,比如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, assign)IBInspectable CGFloat cornerRadius;</span><br></pre></td></tr></table></figure></p>
+<p>这样我们就能在面板里面直接控制圆角大小了,与此同时我们还可以加上<code>IB_DESIGNABLE</code>关键字,来让xib可以可视化的设置属性,所见即所得.</p>
+<p>似乎达到了要求,但是开头那个痛点还在:每个xib都要去设置.</p>
+<p>于是乎我又想到了通过给<code>UIView</code>添加一个分类来做这件事情,就有了下面的过程: </p>
+<p>######进阶版<br>新建一个<code>UIView+CornerRadius</code>的分类,在分类的头文件中添加平时用到的一些属性,别忘了<code>IBInspectable</code>关键字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, assign)IBInspectable CGFloat cornerRadius;</span><br><span class="line">@property (nonatomic, assign)IBInspectable CGFloat borderWidth;</span><br><span class="line">@property (nonatomic, strong)IBInspectable UIColor *borderColor;</span><br></pre></td></tr></table></figure></p>
+<p>由于OC的特性,分类是无法扩展属性的,所以这里我们需要手动实现其set方法与get方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">- (CGFloat)cornerRadius</span><br><span class="line">&#123;</span><br><span class="line">    return [objc_getAssociatedObject(self, @selector(cornerRadius)) floatValue];</span><br><span class="line">&#125;</span><br><span class="line">- (void)setCornerRadius:(CGFloat)cornerRadius</span><br><span class="line">&#123;</span><br><span class="line">    self.layer.cornerRadius = cornerRadius;</span><br><span class="line">    self.layer.masksToBounds = YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (CGFloat)borderWidth</span><br><span class="line">&#123;</span><br><span class="line">    return [objc_getAssociatedObject(self, @selector(borderWidth)) floatValue];</span><br><span class="line">&#125;</span><br><span class="line">- (void)setBorderWidth:(CGFloat)borderWidth</span><br><span class="line">&#123;</span><br><span class="line">    self.layer.borderWidth = borderWidth;</span><br><span class="line">    self.layer.masksToBounds = YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (UIColor *)borderColor</span><br><span class="line">&#123;</span><br><span class="line">    return objc_getAssociatedObject(self, @selector(borderColor));</span><br><span class="line">&#125;</span><br><span class="line">- (void)setBorderColor:(UIColor *)borderColor</span><br><span class="line">&#123;</span><br><span class="line">    self.layer.borderColor = borderColor.CGColor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大功告成,到这里为止,我们在xib中使用<code>UIView</code>的子类的时候,都可以很方便的设置<code>borderColor , borderWidth, cornerRadius</code>了,如果有兴趣,还可以扩展更多的属性.<br>如图:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-09a4b89000788d56.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="17.jpg"></p>
+<p>#####美中不足<br>使用了分类的话,是无法通过<code>IB_DESIGNABLE</code>进行实时修改实时显示的,所以只有在运行后能看到实际效果,个人猜测是使用了分类之后并不能给原类扩展属性,仅仅是添加了相应的set与get方法导致的,如果有人知道能够解决这个问题,求告知啊~~~</p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
+    <article id="post-iOS8新特性---更优雅的弹窗" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/01/08/iOS8新特性---更优雅的弹窗/" class="article-date">
+  <time datetime="2016-01-08T03:35:45.000Z" itemprop="datePublished">2016-01-08</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/2016/01/08/iOS8新特性---更优雅的弹窗/">iOS8新特性---更优雅的弹窗</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>iOS8之后新增了<code>UIAlertController</code>用来取代<code>UIAlertView</code>以及<code>UIActionSheet</code>,它整合了以上两个控件的功能,并且提供了更优雅的创建各种选项的方式.</p>
+<p>废话不多说,直接上工程.<br>新建一个工程,在sb里面添加一个Segment用于分别显示<code>UIAlertView</code>以及<code>UIActionSheet</code>,添加一个start按钮用于出发弹窗.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-895daddecff37c3c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="8A3F4193-1684-41A4-9F44-9CB8EEF4D1D1.png.jpg"><br>点击start触发弹窗,选择alert或者action分别提供两种弹窗模式.<br>不多废话,直接上代码,注意点都在注释里面写清楚了.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">- (IBAction)start:(UIButton *)sender &#123;</span><br><span class="line">    </span><br><span class="line">    UIAlertControllerStyle style;</span><br><span class="line">    switch (self.seguement.selectedSegmentIndex) &#123;</span><br><span class="line">        case 0:</span><br><span class="line">            style = UIAlertControllerStyleAlert;</span><br><span class="line">            break;</span><br><span class="line">            </span><br><span class="line">        case 1:</span><br><span class="line">            style = UIAlertControllerStyleActionSheet;</span><br><span class="line">            break;</span><br><span class="line">        default:</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //初始化alertController</span><br><span class="line">    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@&quot;TITLE&quot; message:@&quot;MESSAGE&quot; preferredStyle:style];</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    //初始化3个alertAction,block里面直接是点击了该选项的回调</span><br><span class="line">    //UIAlertActionStyleDefault默认样式</span><br><span class="line">    UIAlertAction *defaultItem = [UIAlertAction actionWithTitle:@&quot;defaultItem&quot; style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) &#123;</span><br><span class="line">        NSLog(@&quot;点击了defaultItem&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    //UIAlertActionStyleCancel取消按钮,无论添加顺序如何,cancle强制显示在最下面</span><br><span class="line">    UIAlertAction *cancaleItem = [UIAlertAction actionWithTitle:@&quot;cancaleItem&quot; style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) &#123;</span><br><span class="line">        NSLog(@&quot;点击了cancaleItem&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    //UIAlertActionStyleDestructive警示样式,红色字体</span><br><span class="line">    UIAlertAction *destructiveItem = [UIAlertAction actionWithTitle:@&quot;destructiveItem&quot; style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) &#123;</span><br><span class="line">        NSLog(@&quot;点击了destructiveItem&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    //给alertcontroller添加action事件,会按照添加顺序创建选项</span><br><span class="line">    [alertController addAction:defaultItem];</span><br><span class="line">    [alertController addAction:cancaleItem];</span><br><span class="line">    [alertController addAction:destructiveItem];</span><br><span class="line">    </span><br><span class="line">    //如果是UIAlertControllerStyleAlert样式,还可以添加输入框</span><br><span class="line">    if (style == UIAlertControllerStyleAlert) &#123;</span><br><span class="line">        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) &#123;</span><br><span class="line">            textField.font = [UIFont fontWithName:@&quot;AvenirNext-Medium&quot; size:textField.font.pointSize];</span><br><span class="line">            textField.placeholder = @&quot;enjoy coding&quot;;</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //弹出alert只需要modal出alertController即可</span><br><span class="line">    [self presentViewController:alertController animated:YES completion:nil];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最终展示:<br><img src="http://upload-images.jianshu.io/upload_images/290760-cc88f7f04999355d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.jpg"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-97139e131a2e1079.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.jpg"><br>我们可以看到,使用UIAlertController不需要在以前的alertview的代理方法里面判断各种index执行各种事件了,无益大大的简化了代码,如果iOS以后请果断放弃alertview跟actionsheet吧,当然alertview跟actionsheet还是可以继续使用的.  (求一个不用支持iOS7的公司Orz)<br><a href="https://github.com/crossPQW/UIAlertController/tree/master" target="_blank" rel="noopener">github地址戳这里</a><br>have fun~</p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
+    <article id="post-通过file&#39;s owner构建可在sb中使用的xib" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/01/08/通过file's owner构建可在sb中使用的xib/" class="article-date">
+  <time datetime="2016-01-08T02:23:34.000Z" itemprop="datePublished">2016-01-08</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/2016/01/08/通过file's owner构建可在sb中使用的xib/">通过file&#39;s owner构建可在sb中使用的xib</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>首先上<a href="https://github.com/crossPQW/useXibInSb/tree/master" target="_blank" rel="noopener">源码github地址</a></p>
+<p>首先新建一个xib,命名为TestView.xib,一个class类名为TestView.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-f1dbad5a6c043dca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="10.jpg"><br>然后简单的在xib中添加一个背景图,一个UILabel用来展示,并且设置好约束.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-515322947dcfd425.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="11.jpg"><br>常规我们使用xib的话通常会把TestView.swift类绑定为这个xib,为了能够在其他的storyboard中我们换一种方式,指定xib的file’s owner为该类,这样的话我们还可以在storyboard中像view controller构建的xib那样拖线了,而viewcontroller正是其内部view的file’s owner,这里的思路正是借鉴了这个.</p>
+<p>选中file’s owner选项在右边面板里面绑定为自定义的xib.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-c3ebb7c17fbd90a9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="12.jpg"><br>下面则是关键部分了,为了能够在storyboard中以及正常我们通过init方法初始化的时候正常使用这个xib,我们需要复写两个方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">init(frame: CGRect)</span><br><span class="line">init?(coder aDecoder: NSCoder)</span><br></pre></td></tr></table></figure>
+<p>正常我们使用init构造方法初始化的时候,会调用<code>init(frame: CGRect)</code>,而xib跟storyboard的本质是xml文件,所以往下会调用<code>init?(coder aDecoder: NSCoder)</code>方法.</p>
+<p>在这两个方法中实现setup()方法即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">func setup()&#123;</span><br><span class="line">    </span><br><span class="line">    let bundle = NSBundle(forClass: self.dynamicType)</span><br><span class="line">    let nib    = UINib(nibName: &quot;TestView&quot;, bundle: bundle)</span><br><span class="line">    </span><br><span class="line">    view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView</span><br><span class="line">    </span><br><span class="line">    view.frame = bounds</span><br><span class="line">            </span><br><span class="line">    addSubview(view)</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样我们在storyboard中随便拖一个view,只要指定这个view的Class为TestView即可.    </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-2be3f10dc5381164.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="13.jpg"><br>除此之外,并不需要在storyboard中做任何操作,运行之后,OK,正是我们想要的效果.   </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-dafb9a543a0ddede.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="14.jpg">  </p>
+<p>#####Extension:我们还使用<code>@IBInspectable</code>对xib进行可视化编辑<br>我们先把背景图与文字拖为属性,然后使用<code>@IBInspectable</code>设置其get与set方法即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@IBOutlet weak var bgimage: UIImageView!</span><br><span class="line"></span><br><span class="line">@IBOutlet weak var topicTitle: UILabel!</span><br><span class="line"></span><br><span class="line">@IBInspectable var backgroundImage :UIImage&#123;</span><br><span class="line">    get&#123;</span><br><span class="line">        return bgimage.image!</span><br><span class="line">    &#125;</span><br><span class="line">    set&#123;</span><br><span class="line">        bgimage.image = newValue</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@IBInspectable var title: NSString&#123;</span><br><span class="line">    get&#123;</span><br><span class="line">        return topicTitle.text!</span><br><span class="line">    &#125;</span><br><span class="line">    set&#123;</span><br><span class="line">        topicTitle.text = newValue as String</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>OK,这里我们再通过storyboard中使用的时候就更方便了,直接进行属性的设置<br>如图:  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-25444248ada99b06.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15.jpg"></p>
 
     
 	</div>
@@ -156,11 +586,11 @@
 
 
   
-    <article id="post-iOS开发中如何给UITableViewCell添加动画" class="post">
+    <article id="post-iOS9 快速适配Tips" class="post">
 	<footer class="entry-meta-header">
 		<span class="meta-elements date">
-			<a href="/2015/04/14/iOS开发中如何给UITableViewCell添加动画/" class="article-date">
-  <time datetime="2015-04-14T14:28:57.000Z" itemprop="datePublished">2015-04-14</time>
+			<a href="/2015/10/16/iOS9 快速适配Tips/" class="article-date">
+  <time datetime="2015-10-16T09:23:34.000Z" itemprop="datePublished">2015-10-16</time>
 </a>
 		</span>
 		<span class="meta-elements author">黄少华</span>
@@ -173,19 +603,28 @@
 		
   
     <h1 itemprop="name" class="entry-title">
-      <a class="article-title" href="/2015/04/14/iOS开发中如何给UITableViewCell添加动画/">iOS开发中如何给UITableViewCell添加动画</a>
+      <a class="article-title" href="/2015/10/16/iOS9 快速适配Tips/">iOS9 快速适配Tips</a>
     </h1>
   
 
 	</header>
 	<div class="entry-content">
 		
-    	<p>UITableView可以说是iOS开发中最常用的控件了,作为一个高逼格的开发者,肯定不想局限于其平淡无奇的滚动效果,这时候我们就想着往上面倒腾出一些比较有意思的特效,下面来看看如何给UITableViewCell加特效!!</p>
-<p>我们需要用到的代理方法:</p>
-<p>willDisplayCell,顾名思义,在cell即将显示的时候会调用此方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath</span><br></pre></td></tr></table></figure></p>
-<p>添加动画操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line"></span><br><span class="line">	SDShotCell *shotCell = (SDShotCell *) cell;</span><br><span class="line"></span><br><span class="line">	CABasicAnimation *scaleAnimation = [CABasicAnimation 	animationWithKeyPath:@&quot;transform&quot;];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.8, 0.8, 1)];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.toValue  = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1, 1, 1)];</span><br><span class="line"></span><br><span class="line">	scaleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];</span><br><span class="line"></span><br><span class="line">	[shotCell.layer addAnimation:scaleAnimation forKey:@&quot;transform&quot;];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>大功告成,很简单的操作,有兴趣还可以研究更多地动效.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/290760-a352f58c248831e3.gif" alt="271224350203657.gif"></p>
+    	<p> Xcode7正式版发布之后,我们团队第一时间进行了升级体验,在确定没有重大bug之后,全体升级Xcode7,世界如此美好~~~<br>但是升级之后还是遇到一些问题,把踩的坑小记一下.  </p>
+<p>#####<strong>1.Swift2.0语法更新之后编译不通过</strong>.<br>当初为了学习中,我们项目中某个模块使用swift实现,现在想来这绝逼是最2的事情了,Xcode6以来,每次更新都随着语法的变动,每次看到编译后一堆红色警告都是心烦意乱.对应解决办法不难,修改代码即可.  </p>
+<p>#####<strong>2. Bitcode导致编译不通过问题</strong><br>在修改完swift代码之后,编辑报错如下:  </p>
+<blockquote>
+<p>xxx does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target.  </p>
+</blockquote>
+<p>Xcode7之后,默认开启Bitcode,但是引用的第三方库不支持啊,AppThinning始终是个美好的愿景啊,暂时可以通过修改<code>Build settings - Build Options - Enable Bitcode 改为NO</code>来解决.  </p>
+<p>#####<strong>3.Http request fail</strong><br>iOS9之后默认只支持更安全的HTTPS请求,我们公司暂时不支持HTTPS,我们可以来到info.plist里面添加一项来搞定它.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;</span><br><span class="line">&lt;dict&gt;</span><br><span class="line">    &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;</span><br><span class="line">    &lt;true/&gt;</span><br><span class="line">&lt;/dict&gt;</span><br></pre></td></tr></table></figure></p>
+<p>#####<strong>4.新字体导致UI问题</strong><br>新苹方字体个人很喜欢,小字体时观看对眼睛更友好,但是字体间距好像比以前稍微宽了一丢丢,导致UI出现了一丢丢问题,稍微注意一下Label宽度即可.</p>
+<p>#####<strong>5.键盘闪现bug</strong><br>应用内无缘无故弹出数字键盘,不知道哪里出问题了,stackoverflow查询之后发现是UIAlertview的问题,需要改为iOS8添加的UIAlertController,<a href="http://huangshaohua.cn/2015/07/24/ios8xin-te-xing-geng-you-ya-de-dan-chuang/" target="_blank" rel="noopener">(iOS8新特性—更优雅的弹窗)</a>,但是由于应用还要支持iOS7,这个问题不了了之,暂且记下.</p>
+<p>#####<strong>6. canOpenUrl机制改变导致无法跳转应用</strong><br>iOS9之后处于对用户隐私的考虑,对使用URLScheme跳转做了限制,只需要在info.plist里面<code>LSApplicationQueriesSchemes</code>字段下添加相应的UrlScheme即可正常跳转,白名单上限是50个.<br>常见白名单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"> &lt;key&gt;LSApplicationQueriesSchemes&lt;/key&gt;</span><br><span class="line">&lt;array&gt;</span><br><span class="line">    &lt;!-- 微信 URL Scheme 白名单--&gt;</span><br><span class="line">    &lt;string&gt;wechat&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;weixin&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 新浪微博 URL Scheme 白名单--&gt;</span><br><span class="line">    &lt;string&gt;sinaweibohd&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;sinaweibo&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;sinaweibosso&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;weibosdk&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;weibosdk2.5&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- QQ、Qzone URL Scheme 白名单--&gt;</span><br><span class="line">    &lt;string&gt;mqqapi&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqq&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqOpensdkSSoLogin&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqconnect&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkdataline&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkgrouptribeshare&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkfriend&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkapi&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkapiV2&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqopensdkapiV3&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneopensdk&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;wtloginmqq&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;wtloginmqq2&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqqwpa&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzone&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzonev2&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneshare&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;wtloginqzone&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzonewx&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneopensdkapiV2&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneopensdkapi19&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneopensdkapi&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;mqzoneopensdk&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 支付宝  URL Scheme 白名单--&gt;</span><br><span class="line">    &lt;string&gt;alipay&lt;/string&gt;</span><br><span class="line">    &lt;string&gt;alipayshare&lt;/string&gt;</span><br><span class="line"></span><br><span class="line">&lt;/array&gt;</span><br></pre></td></tr></table></figure></p>
+<p><em>PS:哪位仁兄应用里面添加了50个url scheme让我来膜拜一下</em></p>
+<p>#####<strong>7.约束leading与training导致的崩溃</strong><br>iOS9以前<code>leading</code>与<code>training</code>基本可以理解为<code>left</code>与<code>right</code>,但是iOS9之后不是了,貌似说增加了某些国家文字支持,是从右往左导致<code>leading</code>与<code>training</code>与<code>left</code>跟right相反了(求证实),我在使用<code>Masonry</code>添加约束的时候已经全用<code>left</code>于<code>right</code>替换.  </p>
+<p>#####<strong>8.preferredLanguages导致应用默认为英文的bug</strong><br>哈哈哈哈更新iOS9之后微信跟微博第一时间中枪了…..<br>嗯嗯,严肃.<br>iOS9正式版之后<code>[NSLocale preferredLanguages]</code>返回的当前语言后面加了所在国家后缀,比如中国地<code>zh-Hans</code>变成了<code>zh-Hans-CN</code>,这时候使用返回值的前缀做国际化适配即可.<br>例如<code>if ([currentLanguage hasPrefix:@&quot;zh-Hans&quot;])</code>  </p>
+<p>差不多就酱,遇到啥新问题再记下来^_^<br>每次升级都是一堆坑,求一家最低支持iOS9设备的公司Orz……</p>
 
     
 	</div>
@@ -208,6 +647,10 @@
 
 
   
+  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
     </div>

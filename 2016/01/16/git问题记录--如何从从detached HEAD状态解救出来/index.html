@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>git问题记录--如何从从detached HEAD状态解救出来 | crossPQW</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="今天使用git的时候在终端发现这样一条信息HEAD detached at head ##分析心里一惊,艾玛这是什么状态?其实我们知道,git checkout本质上是修改HEAD里面的内容来让它指向不同分支的,而HEAD文件指向的分支就是我们当前的分支,但是有时候HEAD不会指向任何分支,严谨的说是HEAD指向了一个没有分支名字的修订版本,此时恭喜你,已经处于游离状态了(detached HEA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git问题记录--如何从从detached HEAD状态解救出来">
+<meta property="og:url" content="http://yoursite.com/2016/01/16/git问题记录--如何从从detached HEAD状态解救出来/index.html">
+<meta property="og:site_name" content="crossPQW">
+<meta property="og:description" content="今天使用git的时候在终端发现这样一条信息HEAD detached at head ##分析心里一惊,艾玛这是什么状态?其实我们知道,git checkout本质上是修改HEAD里面的内容来让它指向不同分支的,而HEAD文件指向的分支就是我们当前的分支,但是有时候HEAD不会指向任何分支,严谨的说是HEAD指向了一个没有分支名字的修订版本,此时恭喜你,已经处于游离状态了(detached HEA">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-e8491f69473bf200.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-14T14:51:51.735Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git问题记录--如何从从detached HEAD状态解救出来">
+<meta name="twitter:description" content="今天使用git的时候在终端发现这样一条信息HEAD detached at head ##分析心里一惊,艾玛这是什么状态?其实我们知道,git checkout本质上是修改HEAD里面的内容来让它指向不同分支的,而HEAD文件指向的分支就是我们当前的分支,但是有时候HEAD不会指向任何分支,严谨的说是HEAD指向了一个没有分支名字的修订版本,此时恭喜你,已经处于游离状态了(detached HEA">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/290760-e8491f69473bf200.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/">Home</a></li><li><a href="/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-git问题记录--如何从从detached HEAD状态解救出来" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/01/16/git问题记录--如何从从detached HEAD状态解救出来/" class="article-date">
+  <time datetime="2016-01-16T09:23:34.000Z" itemprop="datePublished">2016-01-16</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      git问题记录--如何从从detached HEAD状态解救出来
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>今天使用git的时候在终端发现这样一条信息<br><code>HEAD detached at head</code></p>
+<p>##<strong>分析</strong><br>心里一惊,艾玛这是什么状态?<br>其实我们知道,<code>git checkout</code>本质上是修改HEAD里面的内容来让它指向不同分支的,而HEAD文件指向的分支就是我们当前的分支,但是有时候HEAD不会指向任何分支,严谨的说是HEAD指向了一个没有分支名字的修订版本,此时恭喜你,已经处于游离状态了(detached HEAD).这时候我们在进行commit操作不会提交到任何分支上去.  </p>
+<p>这个时候输入<code>git status</code>查看当前状态发现我没有在任何本地分支上也验证了刚才的猜想,而这时候我又作死的进行了commit操作,git提示我</p>
+<pre><code>Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  fef4501 interrationRecord page completed
+
+If you want to keep them by creating a new branch, this may be a good time
+to do so with:
+
+ git branch &lt;new-branch-name&gt; fef4501
+</code></pre><p>然后我欢天喜地的<code>git checkout ask_11_16</code>切换到工作分支以为万事大吉,艾玛坑爹啊,我特么辛辛苦苦写了一天的代码呢?不过这时候我们回看上面那段提示,智能的git告诉我如果我还想要这次提交的话,可以创建一个新的分支,同时把本次提交的id告诉了我:<code>fef4501</code>.<br>那么这时候我已经有了一个思路:</p>
+<ol>
+<li>基于本次提交创建一个临时分支.</li>
+<li>然后merge到我当前工作分支.</li>
+<li>删除临时分支  </li>
+</ol>
+<p>##<strong>实操</strong></p>
+<p>####基于本次提交创建临时分支<br>输入<br><code>$git branch temp fef4501</code><br>使用git branch 分支名 操作ID 这句命令能够创建一个新的分支,但要注意此时我们还没有切换到这个分支上,这个分支上面代码跟我刚才提交完之后的一样.</p>
+<p>####切换到工作分支并合并代码<br>输入<br><code>$git checkout ask_11_16</code><br>意味着我已经切换到ask_11_16分支,这个分支是我之前想要提交的分支.<br>然后<br><code>$git merge temp</code><br>这行命令过后我们已经上次commit合并到ask_11_16上了,此时终端状态为<br><code>Your branch is ahead of &#39;origin/ask_11_16&#39; by 1 commit.</code><br>我们只需要<code>$git push</code>即可把本次提交push到远程分支.<br>这时候检查代码,perfect!正式我们想要的状态.</p>
+<p>####删除temp分支<br>大功告成,至于temp分支已经没有了利用价值,本着过河拆桥的精神我不得不输入<br><code>$git branch -d temp</code><br>来删除temp分支. </p>
+<p><em>git是一个很优秀的版本控制工具,利用得当能让我们在团队协作时候如鱼得水,但是万一有操作失误,也会让很多不熟悉git命令的人各种发愁,下面贴一个git命令大全,非常实用</em></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-e8491f69473bf200.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="9.jpg"></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/08/简明的集成touchID教程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          简明的集成touchID教程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/09/给项目中所有xib添加圆角:borderColor等属性/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          给项目中所有xib添加圆角/borderColor等属性
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2017 黄少华<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html>

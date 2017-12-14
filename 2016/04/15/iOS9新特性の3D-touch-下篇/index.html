@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS9新特性の3D-touch-下篇 | crossPQW</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="再看一下如何在应用内集成3Dtouch.3D-touch操作分为轻按peek跟重按pop,根据apple官方设计规范,一般来说peek呼出预览视图,我在storyboard里面创建一个PreviewController用于描述呼出的预览视图,同时创建了一个DetailViewController用于显示最终显示的视图,同时我们应该注意,pop之后的视图应该与用户正常点击进去之后没有任何区别.此时我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS9新特性の3D-touch-下篇">
+<meta property="og:url" content="http://yoursite.com/2016/04/15/iOS9新特性の3D-touch-下篇/index.html">
+<meta property="og:site_name" content="crossPQW">
+<meta property="og:description" content="再看一下如何在应用内集成3Dtouch.3D-touch操作分为轻按peek跟重按pop,根据apple官方设计规范,一般来说peek呼出预览视图,我在storyboard里面创建一个PreviewController用于描述呼出的预览视图,同时创建了一个DetailViewController用于显示最终显示的视图,同时我们应该注意,pop之后的视图应该与用户正常点击进去之后没有任何区别.此时我">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-7bc6dc52f175f6af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-14T14:47:20.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS9新特性の3D-touch-下篇">
+<meta name="twitter:description" content="再看一下如何在应用内集成3Dtouch.3D-touch操作分为轻按peek跟重按pop,根据apple官方设计规范,一般来说peek呼出预览视图,我在storyboard里面创建一个PreviewController用于描述呼出的预览视图,同时创建了一个DetailViewController用于显示最终显示的视图,同时我们应该注意,pop之后的视图应该与用户正常点击进去之后没有任何区别.此时我">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/290760-7bc6dc52f175f6af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/">Home</a></li><li><a href="/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-iOS9新特性の3D-touch-下篇" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/04/15/iOS9新特性の3D-touch-下篇/" class="article-date">
+  <time datetime="2016-04-15T08:43:34.000Z" itemprop="datePublished">2016-04-15</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      iOS9新特性の3D-touch-下篇
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>再看一下如何在应用内集成3Dtouch.<br>3D-touch操作分为轻按<code>peek</code>跟重按<code>pop</code>,根据apple官方设计规范,一般来说<code>peek</code>呼出预览视图,我在storyboard里面创建一个<code>PreviewController</code>用于描述呼出的预览视图,同时创建了一个<code>DetailViewController</code>用于显示最终显示的视图,同时我们应该注意,<code>pop</code>之后的视图应该与用户正常点击进去之后没有任何区别.<br>此时我们应用层级为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tableView---(peek)----&gt;previewController---(pop)---&gt;DetailviewController</span><br></pre></td></tr></table></figure></p>
+<p>无论何时,我们在使用3D-touch的时候应当先检查3D-touch的可用性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)check3Dtouch</span><br><span class="line">&#123;</span><br><span class="line">    //检测3Dtouch是否可用,若可用注册预览视图代理</span><br><span class="line">    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) &#123;</span><br><span class="line">        [self registerForPreviewingWithDelegate:self sourceView:self.view];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们在viewWillAppear里面和用户进行3D-touch相关设置的时候都要检查可用性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewWillAppear:(BOOL)animated</span><br><span class="line">&#123;</span><br><span class="line">    [super viewWillAppear:animated];</span><br><span class="line">    </span><br><span class="line">    [self check3Dtouch];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">///用户可能进入设置开启/关闭3Dtouch的时候,在这里需要再次检测3Dtouch可用性</span><br><span class="line">- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection</span><br><span class="line">&#123;</span><br><span class="line">    [self check3Dtouch];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>别忘了设置<code>UIViewControllerPreviewingDelegate</code>预览视图代理.</p>
+<p>接下来只需要在对应的代理方法里面返回相应的控制器即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (UIViewController *)previewingContext:(id&lt;UIViewControllerPreviewing&gt;)previewingContext viewControllerForLocation:(CGPoint)location&#123;</span><br><span class="line">    </span><br><span class="line">    if ([self.presentedViewController isKindOfClass:[PreviewViewController class]]) &#123;return nil;&#125;</span><br><span class="line">    </span><br><span class="line">    UIStoryboard *sb = [UIStoryboard storyboardWithName:@&quot;Main&quot; bundle:nil];</span><br><span class="line">    PreviewViewController *previewController = [sb instantiateViewControllerWithIdentifier:@&quot;preview&quot;];</span><br><span class="line">    </span><br><span class="line">    location = CGPointMake(10, 100);</span><br><span class="line">    return previewController;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)previewingContext:(id&lt;UIViewControllerPreviewing&gt;)previewingContext commitViewController:(UIViewController *)viewControllerToCommit&#123;</span><br><span class="line">    </span><br><span class="line">    UIStoryboard *sb = [UIStoryboard storyboardWithName:@&quot;Main&quot; bundle:nil];</span><br><span class="line">    DetailViewController *detailView = [sb instantiateViewControllerWithIdentifier:@&quot;detailView&quot;];</span><br><span class="line">    </span><br><span class="line">    [self showViewController:detailView sender:self];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此时<code>peek</code>跟<code>pop</code>手势都已经集成完毕,这时候还想实现类似在preview下面添加alert的操作,如系统message里面的快捷回复</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-7bc6dc52f175f6af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="8.png"><br>其实只需要在previewController里面实现<code>- (NSArray&lt;id&lt;UIPreviewActionItem&gt;&gt; *)previewActionItems</code>方法即可.<br><em>PS:在xcode6.3时OC添加了制定数组元组类型的功能,有利于写出更加严谨的代码,好评~</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">- (NSArray&lt;id&lt;UIPreviewActionItem&gt;&gt; *)previewActionItems</span><br><span class="line">&#123;</span><br><span class="line">    UIPreviewAction *action1 = [UIPreviewAction actionWithTitle:@&quot;action1&quot; style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</span><br><span class="line">        NSLog(@&quot;action1 click&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:@&quot;action2&quot; style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</span><br><span class="line">        NSLog(@&quot;action2 click&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    UIPreviewAction *action3 = [UIPreviewAction actionWithTitle:@&quot;action3&quot; style:UIPreviewActionStyleSelected handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</span><br><span class="line">        NSLog(@&quot;action3 click&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    UIPreviewActionGroup *group1 = [UIPreviewActionGroup actionGroupWithTitle:@&quot;group1&quot; style:UIPreviewActionStyleDefault actions:@[action1,action2]];</span><br><span class="line">    UIPreviewActionGroup *group2 = [UIPreviewActionGroup actionGroupWithTitle:@&quot;group2&quot; style:UIPreviewActionStyleDestructive actions:@[action1,action3]];</span><br><span class="line">    UIPreviewActionGroup *group3 = [UIPreviewActionGroup actionGroupWithTitle:@&quot;group3&quot; style:UIPreviewActionStyleSelected actions:@[action2,action3]];</span><br><span class="line">    </span><br><span class="line">//    NSArray *items = @[action1,action2,action3];</span><br><span class="line">//    NSArray *items = @[group1,group2,group3];</span><br><span class="line">    NSArray *items = @[action1,group1,action2,group2,action3,group3];</span><br><span class="line">    return items;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有兴趣的话可以自己动手体会一下<code>UIPreviewActionGroup</code>与<code>UIPreviewAction</code>的区别.</p>
+<p><a href="https://github.com/crossPQW/3d-touch-demo" target="_blank" rel="noopener">你可以在github下载到此源码</a></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/04/15/iOS9新特性の3D-touch-上篇/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          iOS9新特性の3D-touch-上篇
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2017 黄少华<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html>
