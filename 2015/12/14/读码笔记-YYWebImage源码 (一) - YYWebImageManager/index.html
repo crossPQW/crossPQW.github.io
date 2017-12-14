@@ -1,11 +1,85 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
+
+
+
   
-  <title>读码笔记-YYWebImage源码 (二) -YYWebImageOperation.md | crossPQW</title>
-  <meta name="viewport" content="width=device-width">
-  <meta name="description" content="不得不说,YYKit系列的横空出世让很多人对国内的开发者都摘下了有色眼镜,原来并非大神全是国外的,自己膜拜之余也想读一下具体的一些实现细节,所以到github上fork了YYWebImage阅读源码并把注释写在response里面,权当笔记.  第一天,YYWebImageManager类头文件123456789101112131415161718192021222324252627282930">
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="不得不说,YYKit系列的横空出世让很多人对国内的开发者都摘下了有色眼镜,原来并非大神全是国外的,自己膜拜之余也想读一下具体的一些实现细节,所以到github上fork了YYWebImage阅读源码并把注释写在response里面,权当笔记.  第一天,YYWebImageManager类头文件123456789101112131415161718192021222324252627282930">
 <meta property="og:type" content="article">
 <meta property="og:title" content="读码笔记-YYWebImage源码 (二) -YYWebImageOperation.md">
 <meta property="og:url" content="http://yoursite.com/2015/12/14/读码笔记-YYWebImage源码 (一) - YYWebImageManager/index.html">
@@ -17,62 +91,216 @@
 <meta name="twitter:title" content="读码笔记-YYWebImage源码 (二) -YYWebImageOperation.md">
 <meta name="twitter:description" content="不得不说,YYKit系列的横空出世让很多人对国内的开发者都摘下了有色眼镜,原来并非大神全是国外的,自己膜拜之余也想读一下具体的一些实现细节,所以到github上fork了YYWebImage阅读源码并把注释写在response里面,权当笔记.  第一天,YYWebImageManager类头文件123456789101112131415161718192021222324252627282930">
 <meta name="twitter:image" content="http://yoursite.com/content/images/2015/12/8FDD6A84-B469-4A4D-8B9C-6DAE86547031.png">
-  
-    <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  
-</head>
-<body>
-  <div id="container">
-    <div class="mobile-nav-panel">
-	<i class="icon-reorder icon-large"></i>
-</div>
-<header id="header">
-	<h1 class="blog-title">
-		<a href="/">crossPQW</a>
-	</h1>
-	<nav class="nav">
-		<ul>
-			<li><a href="/">Home</a></li><li><a href="/archives">Archives</a></li>
-			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
-			<li><a href="/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
-		</ul>
-	</nav>
-	<div id="search-form-wrap">
-		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-	</div>
-</header>
-    <div id="main">
-      <article id="post-读码笔记-YYWebImage源码 (一) - YYWebImageManager" class="post">
-	<footer class="entry-meta-header">
-		<span class="meta-elements date">
-			<a href="/2015/12/14/读码笔记-YYWebImage源码 (一) - YYWebImageManager/" class="article-date">
-  <time datetime="2015-12-14T08:15:59.000Z" itemprop="datePublished">2015-12-14</time>
-</a>
-		</span>
-		<span class="meta-elements author">黄少华</span>
-		<div class="commentscount">
-			
-		</div>
-	</footer>
-	
-	<header class="entry-header">
-		
-  
-    <h1 class="article-title entry-title" itemprop="name">
-      读码笔记-YYWebImage源码 (二) -YYWebImageOperation.md
-    </h1>
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/12/14/读码笔记-YYWebImage源码 (一) - YYWebImageManager/"/>
+
+
+
+
+
+  <title>读码笔记-YYWebImage源码 (二) -YYWebImageOperation.md | crossPQW</title>
   
 
-	</header>
-	<div class="entry-content">
-		
-    	<blockquote>
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">crossPQW</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/12/14/读码笔记-YYWebImage源码 (一) - YYWebImageManager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黄少华">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="crossPQW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">读码笔记-YYWebImage源码 (二) -YYWebImageOperation.md</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-14T16:15:59+08:00">
+                2015-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
 <p>不得不说,YYKit系列的横空出世让很多人对国内的开发者都摘下了有色眼镜,原来并非大神全是国外的,自己膜拜之余也想读一下具体的一些实现细节,所以到github上fork了<code>YYWebImage</code>阅读源码并把注释写在response里面,权当笔记.</p>
 </blockquote>
 <p>第一天,<strong><code>YYWebImageManager</code></strong>类<br>头文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line"></span><br><span class="line">#if __has_include(&lt;YYWebImage/YYWebImage.h&gt;)</span><br><span class="line">#import &lt;YYWebImage/YYImageCache.h&gt;</span><br><span class="line">#else</span><br><span class="line">#import &quot;YYImageCache.h&quot;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">@class YYWebImageOperation;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/// The options to control image operation.</span><br><span class="line">///控制图片请求的模式</span><br><span class="line">typedef NS_OPTIONS(NSUInteger, YYWebImageOptions) &#123;</span><br><span class="line">    </span><br><span class="line">    /// Show network activity on status bar when download image.</span><br><span class="line">    ///当下载图片的时候会在状态栏显示一个当前网络状况</span><br><span class="line">    YYWebImageOptionShowNetworkActivity = 1 &lt;&lt; 0,</span><br><span class="line">    </span><br><span class="line">    /// Display progressive/interlaced/baseline image during download (same as web browser).</span><br><span class="line">    ///能够像浏览器一样显示一个逐渐显示的图片,有三种方式:换换显示,中间带交叉效果,基于基线显示.这里可以看demo理解三种模式的区别</span><br><span class="line">    YYWebImageOptionProgressive = 1 &lt;&lt; 1,</span><br><span class="line">    </span><br><span class="line">    /// Display blurred progressive JPEG or interlaced PNG image during download.</span><br><span class="line">    /// This will ignore baseline image for better user experience.</span><br><span class="line">    ///下载的时候显示一个模糊的渐渐显示的JPEG图片,或者一个交错显示的PNG图片,具体效果还是看demo</span><br><span class="line">    ///这种模式会忽略baseline这种显示模式来获得更好的用户体验</span><br><span class="line">    YYWebImageOptionProgressiveBlur = 1 &lt;&lt; 2,</span><br><span class="line">    </span><br><span class="line">    /// Use NSURLCache instead of YYImageCache.</span><br><span class="line">    ///使用NSURLCache来代替YYImageCache</span><br><span class="line">    YYWebImageOptionUseNSURLCache = 1 &lt;&lt; 3,</span><br><span class="line">    </span><br><span class="line">    /// Allows untrusted SSL ceriticates.</span><br><span class="line">    ///允许未受信任的SSL证书,PS:基于我的理解以及对比SDWebImage,这种模式一般用户调试过程,不用于生产过程</span><br><span class="line">    YYWebImageOptionAllowInvalidSSLCertificates = 1 &lt;&lt; 4,</span><br><span class="line">    </span><br><span class="line">    /// Allows background task to download image when app is in background.</span><br><span class="line">    ///app进入后台的时候允许后台下载图片</span><br><span class="line">    YYWebImageOptionAllowBackgroundTask = 1 &lt;&lt; 5,</span><br><span class="line">    </span><br><span class="line">    /// Handles cookies stored in NSHTTPCookieStore.</span><br><span class="line">    ///把cookies存储进NSHTTPCookieStore</span><br><span class="line">    YYWebImageOptionHandleCookies = 1 &lt;&lt; 6,</span><br><span class="line">    </span><br><span class="line">    /// Load the image from remote and refresh the image cache.</span><br><span class="line">    ///从远程下载图片并且刷新图片缓存,这种模式可以用于更换了图片内容,但是图片URL不替换</span><br><span class="line">    YYWebImageOptionRefreshImageCache = 1 &lt;&lt; 7,</span><br><span class="line">    </span><br><span class="line">    /// Do not load image from/to disk cache.</span><br><span class="line">    ///不从硬盘缓存加载图片,同时也不会把图片缓存进磁盘</span><br><span class="line">    YYWebImageOptionIgnoreDiskCache = 1 &lt;&lt; 8,</span><br><span class="line">    </span><br><span class="line">    /// Do not change the view&apos;s image before set a new URL to it.</span><br><span class="line">    ///当没有通过一个URL下载到一个新的图片的时候不去修改图片</span><br><span class="line">    YYWebImageOptionIgnorePlaceHolder = 1 &lt;&lt; 9,</span><br><span class="line">    </span><br><span class="line">    /// Ignore image decoding.</span><br><span class="line">    /// This may used for image downloading without display.</span><br><span class="line">    ///忽略图片解码</span><br><span class="line">    ///这种模式可能用于下载的时候并不去显示该图片</span><br><span class="line">    YYWebImageOptionIgnoreImageDecoding = 1 &lt;&lt; 10,</span><br><span class="line">    </span><br><span class="line">    /// Ignore multi-frame image decoding.</span><br><span class="line">    /// This will handle the GIF/APNG/WebP/ICO image as single frame image.</span><br><span class="line">    ///忽略多frame图片解码</span><br><span class="line">    ///这种模式会讲 GIF/APNG/WebP/ICO图片转换为单一frame的图片,开发中如果需求图片固定显示大小,这个模式可能会有用</span><br><span class="line">    YYWebImageOptionIgnoreAnimatedImage = 1 &lt;&lt; 11,</span><br><span class="line">    </span><br><span class="line">    /// Set the image to view with a fade animation.</span><br><span class="line">    /// This will add a &quot;fade&quot; animation on image view&apos;s layer for better user experience.</span><br><span class="line">    ///设置图片的时候带有一个fade的动画效果</span><br><span class="line">    ///会给view&apos;s layer添加一个淡入淡出动画效果来获取更好的用户体验</span><br><span class="line">    YYWebImageOptionSetImageWithFadeAnimation = 1 &lt;&lt; 12,</span><br><span class="line">    </span><br><span class="line">    /// Do not set the image to the view when image fetch complete.</span><br><span class="line">    /// You may set the image manually.</span><br><span class="line">    ///当图片下载完成之前不去设置它</span><br><span class="line">    ///你可以手动设置图片</span><br><span class="line">    YYWebImageOptionAvoidSetImage = 1 &lt;&lt; 13,</span><br><span class="line">    </span><br><span class="line">    /// This flag will add the URL to a blacklist (in memory) when the URL fail to be downloaded,</span><br><span class="line">    /// so the library won&apos;t keep trying.</span><br><span class="line">    ///这种模式会把URL加进黑名单当下载失败的时候,黑名单存储在内存中,所以这种模式不会尝试重复下载</span><br><span class="line">    YYWebImageOptionIgnoreFailedURL = 1 &lt;&lt; 14,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">/// Indicated where the image came from.</span><br><span class="line">///用来告诉我们图片来源</span><br><span class="line">typedef NS_ENUM(NSUInteger, YYWebImageFromType) &#123;</span><br><span class="line">    </span><br><span class="line">    /// No value.空</span><br><span class="line">    YYWebImageFromNone = 0,</span><br><span class="line">    </span><br><span class="line">    /// Fetched from memory cache immediately.</span><br><span class="line">    /// If you called &quot;setImageWithURL:...&quot; and the image is already in memory,</span><br><span class="line">    /// then you will get this value at the same call.</span><br><span class="line">    ///立刻从内存中查找图片,如果你调用了&quot;setImageWithURL...&quot;并且图片已经存在于内存,你会从相同的回调里面得到这个值</span><br><span class="line">    YYWebImageFromMemoryCacheFast,</span><br><span class="line">    </span><br><span class="line">    /// Fetched from memory cache. ///从内存中来</span><br><span class="line">    YYWebImageFromMemoryCache,</span><br><span class="line">    </span><br><span class="line">    /// Fetched from disk cache. ///从磁盘中来</span><br><span class="line">    YYWebImageFromDiskCache,</span><br><span class="line">    </span><br><span class="line">    /// Fetched from remote (web or file path).///从远程下载的,可以是web或者一个路径</span><br><span class="line">    YYWebImageFromRemote,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">/// Indicated image fetch complete stage.</span><br><span class="line">///用来告诉我们图片下载的完成度的</span><br><span class="line">typedef NS_ENUM(NSInteger, YYWebImageStage) &#123;</span><br><span class="line">    </span><br><span class="line">    /// Incomplete, progressive image.///未完成,带进度的image</span><br><span class="line">    YYWebImageStageProgress  = -1,</span><br><span class="line">    </span><br><span class="line">    /// Cancelled.///已经取消了</span><br><span class="line">    YYWebImageStageCancelled = 0,</span><br><span class="line">    </span><br><span class="line">    /// Finished (succeed or failed).///已经结束,可能是成功或者失败</span><br><span class="line">    YYWebImageStageFinished  = 1,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The block invoked in remote image fetch progress.</span><br><span class="line"> </span><br><span class="line"> @param receivedSize Current received size in bytes.</span><br><span class="line"> @param expectedSize Expected total size in bytes (-1 means unknown).</span><br><span class="line"> */</span><br><span class="line">///从远程下载完成过程的回调,参数receivedSize是已经下载的大小,expectedSize是总共大小,因此可以通过receivedSize/expectedSize获得progress,如果expectedSize = -1代表着不知道一共有多大</span><br><span class="line">typedef void(^YYWebImageProgressBlock)(NSInteger receivedSize, NSInteger expectedSize);</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The block invoked before remote image fetch finished to do additional image process.</span><br><span class="line"> </span><br><span class="line"> @discussion This block will be invoked before `YYWebImageCompletionBlock` to give</span><br><span class="line"> you a chance to do additional image process (such as resize or crop). If there&apos;s</span><br><span class="line"> no need to transform the image, just return the `image` parameter.</span><br><span class="line"> </span><br><span class="line"> @example You can clip the image, blur it and add rounded corners with these code:</span><br><span class="line">    ^(UIImage *image, NSURL *url) &#123;</span><br><span class="line">        // Maybe you need to create an @autoreleasepool to limit memory cost.</span><br><span class="line">        image = [image yy_imageByResizeToSize:CGSizeMake(100, 100) contentMode:UIViewContentModeScaleAspectFill];</span><br><span class="line">        image = [image yy_imageByBlurRadius:20 tintColor:nil tintMode:kCGBlendModeNormal saturation:1.2 maskImage:nil];</span><br><span class="line">        image = [image yy_imageByRoundCornerRadius:5];</span><br><span class="line">        return image;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line"> @param image The image fetched from url.</span><br><span class="line"> @param url   The image url (remote or local file path).</span><br><span class="line"> @return The transformed image.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> 图片从远程下载完成之前会执行这个block,用来执行一些额外的操作</span><br><span class="line"> @discussion 当&apos;YYWebImageCompletionBlock&apos;这个完成度额回调在下载完成之前会执行这个回调用来给你一个机会做一些额外的处理,比如用来修改图片尺寸等.如果这里不需要对图片进行transform处理,只会返回image这一个参数</span><br><span class="line"> @example 你可以裁剪/模糊图片,或者添加一些边角通过以下代码:</span><br><span class="line"> ^(UIImage *image, NSURL *url)&#123;</span><br><span class="line"> //可能你需要创建一个 @autoreleasepool来限制内存开销</span><br><span class="line"> image = [image yy_imageByResizeToSize:CGSizeMake(100, 100) contentMode:UIViewContentModeScaleAspectFill];</span><br><span class="line"> image = [image yy_imageByBlurRadius:20 tintColor:nil tintMode:kCGBlendModeNormal saturation:1.2 maskImage:nil];</span><br><span class="line"> image = [image yy_imageByRoundCornerRadius:5];</span><br><span class="line"> return image;</span><br><span class="line"> &#125;</span><br><span class="line"> */</span><br><span class="line">typedef UIImage *(^YYWebImageTransformBlock)(UIImage *image, NSURL *url);</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The block invoked when image fetch finished or cancelled.</span><br><span class="line"> </span><br><span class="line"> @param image       The image.</span><br><span class="line"> @param url         The image url (remote or local file path).</span><br><span class="line"> @param from        Where the image came from.</span><br><span class="line"> @param error       Error during image fetching.</span><br><span class="line"> @param finished    If the operation is cancelled, this value is NO, otherwise YES.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> 这个block会在当图片下载完成或者取消的时候调用</span><br><span class="line"> </span><br><span class="line"> @param image       The image.</span><br><span class="line"> @param url         图片url,远程或者本地路径</span><br><span class="line"> @param from        图片从哪来,</span><br><span class="line"> @param error       图片下载中的错误</span><br><span class="line"> @param finished    如果请求取消掉了,返回NO,其他是YES</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">typedef void (^YYWebImageCompletionBlock)(UIImage *image, NSURL *url, YYWebImageFromType from, YYWebImageStage stage, NSError *error);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> A manager to create and manage web image operation.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  用来创建和管理网络图片任务的管理器,这个类其实就一个作用,管理生成一个YYWebImageOperation实例</span><br><span class="line"> */</span><br><span class="line">@interface YYWebImageManager : NSObject</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Returns global YYWebImageManager instance.</span><br><span class="line"> </span><br><span class="line"> 不需要多解释,返回单例类</span><br><span class="line"> @return YYWebImageManager shared instance.</span><br><span class="line"> */</span><br><span class="line">+ (instancetype)sharedManager;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Creates a manager with an image cache and operation queue.</span><br><span class="line"> </span><br><span class="line"> @param cache  Image cache used by manager (pass nil to avoid image cache).</span><br><span class="line"> @param queue  The operation queue on which image operations are scheduled and run</span><br><span class="line">                (pass nil to make the new operation start immediately without queue).</span><br><span class="line"> @return A new manager.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  生成一个manager,带有缓存与操作队列</span><br><span class="line"> *</span><br><span class="line"> *  @param cache 图片缓存用到的manager,</span><br><span class="line"> *  @param queue 图片请求,调度运行的请求队列</span><br><span class="line"> *</span><br><span class="line"> *  @return 一个新的manager</span><br><span class="line"> */</span><br><span class="line">- (instancetype)initWithCache:(YYImageCache *)cache queue:(NSOperationQueue *)queue NS_DESIGNATED_INITIALIZER;</span><br><span class="line"></span><br><span class="line">- (instancetype)init UNAVAILABLE_ATTRIBUTE;</span><br><span class="line">+ (instancetype)new UNAVAILABLE_ATTRIBUTE;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Creates and returns a new image operation, the operation will start immediately.</span><br><span class="line"> </span><br><span class="line"> @param url        The image url (remote or local file path).</span><br><span class="line"> @param options    The options to control image operation.</span><br><span class="line"> @param progress   Progress block which will be invoked on background thread (pass nil to avoid).</span><br><span class="line"> @param transform  Transform block which will be invoked on background thread  (pass nil to avoid).</span><br><span class="line"> @param completion Completion block which will be invoked on background thread  (pass nil to avoid).</span><br><span class="line"> @return A new image operation.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  创建返回一个新的operation,这个operation会立刻开始执行</span><br><span class="line"> *</span><br><span class="line"> *  @param url        图片url,可以是远程或者本地路径</span><br><span class="line"> *  @param options    控制下载的option</span><br><span class="line"> *  @param progress   进度block,会在后台线程的时候调用,传空的话会禁用此特性</span><br><span class="line"> *  @param transform  进入后台线程会调用此block,传空禁用此block</span><br><span class="line"> *  @param completion 进入后台线程会调用此block,传空禁用此block</span><br><span class="line"> *</span><br><span class="line"> *  @return 一个新的图片operation</span><br><span class="line"> */</span><br><span class="line">- (YYWebImageOperation *)requestImageWithURL:(NSURL *)url</span><br><span class="line">                                     options:(YYWebImageOptions)options</span><br><span class="line">                                    progress:(YYWebImageProgressBlock)progress</span><br><span class="line">                                   transform:(YYWebImageTransformBlock)transform</span><br><span class="line">                                  completion:(YYWebImageCompletionBlock)completion;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The image cache used by image operation. </span><br><span class="line"> You can set it to nil to avoid image cache.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  图片请求用到的缓存,可以设置为nil来禁用缓存</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, strong) YYImageCache *cache;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The operation queue on which image operations are scheduled and run.</span><br><span class="line"> You can set it to nil to make the new operation start immediately without queue.</span><br><span class="line"> </span><br><span class="line"> You can use this queue to control maximum number of concurrent operations, to obtain </span><br><span class="line"> the status of the current operations, or to cancel all operations in this manager.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  图片的请求调度运行的队列</span><br><span class="line">    你不通过队列新建一个新的operation的时候可以给这个值置为nil</span><br><span class="line">    </span><br><span class="line">    你可以用这个队列来控制请求的最大值最小值,获得当前操作队列的状态值,或者来取消这个manager中所有的operation</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, strong) NSOperationQueue *queue;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The shared transform block to process image. Default is nil.</span><br><span class="line"> </span><br><span class="line"> When called `requestImageWithURL:options:progress:transform:completion` and</span><br><span class="line"> the `transform` is nil, this block will be used.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  默认值为nil,共享的图片变换的过程,</span><br><span class="line">    当调用`requestImageWithURL:options:progress:transform:completion`并且`transform`为nil时,这个block才有用</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, copy) YYWebImageTransformBlock sharedTransformBlock;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The image request timeout interval in seconds. Default is 15.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  请求超时时间,默认15秒</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, assign) NSTimeInterval timeout;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The username used by NSURLCredential, default is nil.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  NSURLCredential使用的用户名,默认为nil</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, strong) NSString *username;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The password used by NSURLCredential, default is nil.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  同上,密码,默认为nil</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, strong) NSString *password;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The image HTTP request header. Default is &quot;Accept:image/webp,image/\*;q=0.8&quot;.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  图片TTTP的请求头,默认是&quot;Accept:image/webp,image/\*;q=0.8&quot;</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, copy) NSDictionary *headers;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> A block which will be invoked for each image HTTP request to do additional</span><br><span class="line"> HTTP header process. Default is nil.</span><br><span class="line"> </span><br><span class="line"> Use this block to add or remove HTTP header field for a specified URL.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  每个图片http请求做额外的HTTP header操作的时候会调用这个block,默认为nil</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, copy) NSDictionary *(^headersFilter)(NSURL *url, NSDictionary *header);</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> A block which will be invoked for each image operation. Default is nil.</span><br><span class="line"> </span><br><span class="line"> Use this block to provide a custom image cache key for a specified URL.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  每个图片的操作都会调用这个block,默认为nil</span><br><span class="line">    使用这个block能够给URL提供一个自定义的的图片</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, copy) NSString *(^cacheKeyFilter)(NSURL *url);</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Returns the HTTP headers for a specified URL.</span><br><span class="line"> </span><br><span class="line"> @param url A specified URL.</span><br><span class="line"> @return HTTP headers.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  返回URL的HTTP headers</span><br><span class="line"> *</span><br><span class="line"> *  @param url 当前URL</span><br><span class="line"> *</span><br><span class="line"> *  @return http header</span><br><span class="line"> */</span><br><span class="line">- (NSDictionary *)headersForURL:(NSURL *)url;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Returns the cache key for a specified URL.</span><br><span class="line"> </span><br><span class="line"> @param url A specified URL</span><br><span class="line"> @return Cache key used in YYImageCache.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  给URL返回一个cacheKey</span><br><span class="line"> *</span><br><span class="line"> *  @param url 该URL</span><br><span class="line"> *</span><br><span class="line"> *  @return cache key在YYImageCache中有用到</span><br><span class="line"> */</span><br><span class="line">- (NSString *)cacheKeyForURL:(NSURL *)url;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Increments the number of active network requests.</span><br><span class="line"> If this number was zero before incrementing, this will start animating the</span><br><span class="line"> status bar network activity indicator.</span><br><span class="line"> </span><br><span class="line"> This method is thread safe.</span><br><span class="line"> </span><br><span class="line"> This method has no effect in App Extension.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  增加活跃的网络请求数量</span><br><span class="line">    如果在增加前数量为0,那么会在状态来开始有一个网络菊花动画</span><br><span class="line">    该方法是线程安全的</span><br><span class="line">    该方法不会对APP扩展产生影响</span><br><span class="line"> */</span><br><span class="line">+ (void)incrementNetworkActivityCount;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Decrements the number of active network requests.</span><br><span class="line"> If this number becomes zero after decrementing, this will stop animating the</span><br><span class="line"> status bar network activity indicator.</span><br><span class="line"> </span><br><span class="line"> This method is thread safe.</span><br><span class="line"> </span><br><span class="line"> This method has no effect in App Extension.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  与上面对应,减少活跃的网络请求数量,如果执行完毕之后数量变为0,那么会停止在状态栏的网络指示器动画</span><br><span class="line">    线程安全</span><br><span class="line">    不会影响APP扩展</span><br><span class="line"> */</span><br><span class="line">+ (void)decrementNetworkActivityCount;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Get current number of active network requests.</span><br><span class="line"> </span><br><span class="line"> This method is thread safe.</span><br><span class="line"> </span><br><span class="line"> This method has no effect in App Extension.</span><br><span class="line"> */</span><br><span class="line">/**</span><br><span class="line"> *  获取当前活跃的网络请求数量</span><br><span class="line"> *  线程安全</span><br><span class="line">    不会影响APP扩展</span><br><span class="line"> *  @return</span><br><span class="line"> */</span><br><span class="line">+ (NSInteger)currentNetworkActivityCount;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
@@ -86,76 +314,313 @@
 </ol>
 <p>PS:<br><a href="https://github.com/ibireme/YYWebImage" target="_blank" rel="noopener">YYWebImage源码地址</a><br><a href="https://github.com/crossPQW/YYWebImage" target="_blank" rel="noopener">我fork下来添加注释的版本github地址</a></p>
 
+      
+    </div>
     
-	</div>
-	<footer class="entry-footer">
-		<div class="entry-meta-footer">
-			<span class="category">
-				
-			</span>
-			<span class="tags">
-				
-			</span>
-		</div>
-	</footer>
-	
     
-<nav id="article-nav">
-  
-    <a href="/2015/12/15/读码笔记-YYWebImage源码 (二) -YYWebImageOperation/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          读码笔记-YYWebImage源码 (二) -YYWebImageOperation.md
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/10/16/iOS9 快速适配Tips/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">
-        
-          iOS9 快速适配Tips
-        
-      </div>
-    </a>
-  
-</nav>
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/16/iOS9 快速适配Tips/" rel="next" title="iOS9 快速适配Tips">
+                <i class="fa fa-chevron-left"></i> iOS9 快速适配Tips
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/15/读码笔记-YYWebImage源码 (二) -YYWebImageOperation/" rel="prev" title="读码笔记-YYWebImage源码 (二) -YYWebImageOperation.md">
+                读码笔记-YYWebImage源码 (二) -YYWebImageOperation.md <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
   
-</article>
+  
+  
+  </article>
 
 
 
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">黄少华</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">Artikel</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
 
     </div>
-    <div class="mb-search">
-  <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
-    <input type="hidden" name="q" value="site:yoursite.com">
-  </form>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄少华</span>
+
+  
 </div>
-<footer id="footer">
-	<h1 class="footer-blog-title">
-		<a href="/">crossPQW</a>
-	</h1>
-	<span class="copyright">
-		&copy; 2017 黄少华<br>
-		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
-		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-	</span>
-</footer>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
   </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>

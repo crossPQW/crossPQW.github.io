@@ -1,11 +1,85 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
+
+
+
   
-  <title>给项目中所有xib添加圆角/borderColor等属性 | crossPQW</title>
-  <meta name="viewport" content="width=device-width">
-  <meta name="description" content="废话不多,先上github地址,不想看啰嗦的话,直接把项目中UIView+CornerRadius分类导入到自己项目中即可,不需要其他任何操作.      使用xib+storyboard开发能够极大的提高开发效率发展到现在这点应该没有什么异议了,如果还有禁止使用这些东西的公司我觉的可以考虑辞职了……但是有一些属性再系统默认的设置面板里面我们并不能找到,最常用的就是layer.borderWid">
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="废话不多,先上github地址,不想看啰嗦的话,直接把项目中UIView+CornerRadius分类导入到自己项目中即可,不需要其他任何操作.      使用xib+storyboard开发能够极大的提高开发效率发展到现在这点应该没有什么异议了,如果还有禁止使用这些东西的公司我觉的可以考虑辞职了……但是有一些属性再系统默认的设置面板里面我们并不能找到,最常用的就是layer.borderWid">
 <meta property="og:type" content="article">
 <meta property="og:title" content="给项目中所有xib添加圆角&#x2F;borderColor等属性">
 <meta property="og:url" content="http://yoursite.com/2016/01/09/给项目中所有xib添加圆角:borderColor等属性/index.html">
@@ -18,62 +92,216 @@
 <meta name="twitter:title" content="给项目中所有xib添加圆角&#x2F;borderColor等属性">
 <meta name="twitter:description" content="废话不多,先上github地址,不想看啰嗦的话,直接把项目中UIView+CornerRadius分类导入到自己项目中即可,不需要其他任何操作.      使用xib+storyboard开发能够极大的提高开发效率发展到现在这点应该没有什么异议了,如果还有禁止使用这些东西的公司我觉的可以考虑辞职了……但是有一些属性再系统默认的设置面板里面我们并不能找到,最常用的就是layer.borderWid">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/290760-668e169e3a2b8ec8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-  
-    <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  
-</head>
-<body>
-  <div id="container">
-    <div class="mobile-nav-panel">
-	<i class="icon-reorder icon-large"></i>
-</div>
-<header id="header">
-	<h1 class="blog-title">
-		<a href="/">crossPQW</a>
-	</h1>
-	<nav class="nav">
-		<ul>
-			<li><a href="/">Home</a></li><li><a href="/archives">Archives</a></li>
-			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
-			<li><a href="/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
-		</ul>
-	</nav>
-	<div id="search-form-wrap">
-		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-	</div>
-</header>
-    <div id="main">
-      <article id="post-给项目中所有xib添加圆角:borderColor等属性" class="post">
-	<footer class="entry-meta-header">
-		<span class="meta-elements date">
-			<a href="/2016/01/09/给项目中所有xib添加圆角:borderColor等属性/" class="article-date">
-  <time datetime="2016-01-09T03:52:46.000Z" itemprop="datePublished">2016-01-09</time>
-</a>
-		</span>
-		<span class="meta-elements author">黄少华</span>
-		<div class="commentscount">
-			
-		</div>
-	</footer>
-	
-	<header class="entry-header">
-		
-  
-    <h1 class="article-title entry-title" itemprop="name">
-      给项目中所有xib添加圆角/borderColor等属性
-    </h1>
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/01/09/给项目中所有xib添加圆角:borderColor等属性/"/>
+
+
+
+
+
+  <title>给项目中所有xib添加圆角/borderColor等属性 | crossPQW</title>
   
 
-	</header>
-	<div class="entry-content">
-		
-    	<blockquote>
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">crossPQW</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/09/给项目中所有xib添加圆角:borderColor等属性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黄少华">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="crossPQW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">给项目中所有xib添加圆角/borderColor等属性</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-01-09T11:52:46+08:00">
+                2016-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
 <p>废话不多,先上<a href="https://github.com/crossPQW/addCornerRadiusForAllXib" target="_blank" rel="noopener">github地址</a>,不想看啰嗦的话,直接把项目中<code>UIView+CornerRadius</code>分类导入到自己项目中即可,不需要其他任何操作.    </p>
 </blockquote>
 <p>使用xib+storyboard开发能够极大的提高开发效率发展到现在这点应该没有什么异议了,如果还有禁止使用这些东西的公司我觉的可以考虑辞职了……<br>但是有一些属性再系统默认的设置面板里面我们并不能找到,最常用的就是<code>layer.borderWidth,layer.cornerRadius,layer.borderColor</code>这三个属性了,之前都是手动在runtime属性里面手动添加,比如: </p>
@@ -88,76 +316,338 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/290760-09a4b89000788d56.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="17.jpg"></p>
 <h5 id="美中不足"><a href="#美中不足" class="headerlink" title="美中不足"></a>美中不足</h5><p>使用了分类的话,是无法通过<code>IB_DESIGNABLE</code>进行实时修改实时显示的,所以只有在运行后能看到实际效果,个人猜测是使用了分类之后并不能给原类扩展属性,仅仅是添加了相应的set与get方法导致的,如果有人知道能够解决这个问题,求告知啊~~~</p>
 
+      
+    </div>
     
-	</div>
-	<footer class="entry-footer">
-		<div class="entry-meta-footer">
-			<span class="category">
-				
-			</span>
-			<span class="tags">
-				
-			</span>
-		</div>
-	</footer>
-	
     
-<nav id="article-nav">
-  
-    <a href="/2016/01/16/git问题记录--如何从从detached HEAD状态解救出来/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          git问题记录--如何从从detached HEAD状态解救出来
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/01/08/通过file's owner构建可在sb中使用的xib/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">
-        
-          通过file&#39;s owner构建可在sb中使用的xib
-        
-      </div>
-    </a>
-  
-</nav>
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/08/通过file's owner构建可在sb中使用的xib/" rel="next" title="通过file's owner构建可在sb中使用的xib">
+                <i class="fa fa-chevron-left"></i> 通过file's owner构建可在sb中使用的xib
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/16/git问题记录--如何从从detached HEAD状态解救出来/" rel="prev" title="git问题记录--如何从从detached HEAD状态解救出来">
+                git问题记录--如何从从detached HEAD状态解救出来 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
   
-</article>
+  
+  
+  </article>
 
 
 
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">黄少华</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">Artikel</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#基础版"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x57FA;&#x7840;&#x7248;" class="headerlink" title="&#x57FA;&#x7840;&#x7248;"></a>&#x57FA;&#x7840;&#x7248;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#进阶版"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x8FDB;&#x9636;&#x7248;" class="headerlink" title="&#x8FDB;&#x9636;&#x7248;"></a>&#x8FDB;&#x9636;&#x7248;</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#美中不足"><span class="nav-number"></span> <span class="nav-text"><a href="#&#x7F8E;&#x4E2D;&#x4E0D;&#x8DB3;" class="headerlink" title="&#x7F8E;&#x4E2D;&#x4E0D;&#x8DB3;"></a>&#x7F8E;&#x4E2D;&#x4E0D;&#x8DB3;</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
 
     </div>
-    <div class="mb-search">
-  <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
-    <input type="hidden" name="q" value="site:yoursite.com">
-  </form>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄少华</span>
+
+  
 </div>
-<footer id="footer">
-	<h1 class="footer-blog-title">
-		<a href="/">crossPQW</a>
-	</h1>
-	<span class="copyright">
-		&copy; 2017 黄少华<br>
-		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
-		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-	</span>
-</footer>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
   </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
