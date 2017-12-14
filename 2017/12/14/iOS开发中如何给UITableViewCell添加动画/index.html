@@ -3,14 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>crossPQW</title>
+  <title>iOS开发中如何给UITableViewCell添加动画 | crossPQW</title>
   <meta name="viewport" content="width=device-width">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="crossPQW">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="UITableView可以说是iOS开发中最常用的控件了,作为一个高逼格的开发者,肯定不想局限于其平淡无奇的滚动效果,这时候我们就想着往上面倒腾出一些比较有意思的特效,下面来看看如何给UITableViewCell加特效!! 我们需要用到的代理方法: willDisplayCell,顾名思义,在cell即将显示的时候会调用此方法1- (void)tableView:(UITableView *)t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发中如何给UITableViewCell添加动画">
+<meta property="og:url" content="http://yoursite.com/2017/12/14/iOS开发中如何给UITableViewCell添加动画/index.html">
 <meta property="og:site_name" content="crossPQW">
+<meta property="og:description" content="UITableView可以说是iOS开发中最常用的控件了,作为一个高逼格的开发者,肯定不想局限于其平淡无奇的滚动效果,这时候我们就想着往上面倒腾出一些比较有意思的特效,下面来看看如何给UITableViewCell加特效!! 我们需要用到的代理方法: willDisplayCell,顾名思义,在cell即将显示的时候会调用此方法1- (void)tableView:(UITableView *)t">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-a352f58c248831e3.gif">
+<meta property="og:updated_time" content="2017-12-14T14:31:31.877Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="crossPQW">
+<meta name="twitter:title" content="iOS开发中如何给UITableViewCell添加动画">
+<meta name="twitter:description" content="UITableView可以说是iOS开发中最常用的控件了,作为一个高逼格的开发者,肯定不想局限于其平淡无奇的滚动效果,这时候我们就想着往上面倒腾出一些比较有意思的特效,下面来看看如何给UITableViewCell加特效!! 我们需要用到的代理方法: willDisplayCell,顾名思义,在cell即将显示的时候会调用此方法1- (void)tableView:(UITableView *)t">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/290760-a352f58c248831e3.gif">
   
     <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
   
@@ -42,9 +48,7 @@
 	</div>
 </header>
     <div id="main">
-      
-  
-    <article id="post-iOS开发中如何给UITableViewCell添加动画" class="post">
+      <article id="post-iOS开发中如何给UITableViewCell添加动画" class="post">
 	<footer class="entry-meta-header">
 		<span class="meta-elements date">
 			<a href="/2017/12/14/iOS开发中如何给UITableViewCell添加动画/" class="article-date">
@@ -60,8 +64,8 @@
 	<header class="entry-header">
 		
   
-    <h1 itemprop="name" class="entry-title">
-      <a class="article-title" href="/2017/12/14/iOS开发中如何给UITableViewCell添加动画/">iOS开发中如何给UITableViewCell添加动画</a>
+    <h1 class="article-title entry-title" itemprop="name">
+      iOS开发中如何给UITableViewCell添加动画
     </h1>
   
 
@@ -88,70 +92,26 @@
 		</div>
 	</footer>
 	
-</article>
-
-
-	<hr class="article-devider">
-
-
-
-  
-    <article id="post-hello-world" class="post">
-	<footer class="entry-meta-header">
-		<span class="meta-elements date">
-			<a href="/2017/12/14/hello-world/" class="article-date">
-  <time datetime="2017-12-14T13:40:10.633Z" itemprop="datePublished">2017-12-14</time>
-</a>
-		</span>
-		<span class="meta-elements author">黄少华</span>
-		<div class="commentscount">
-			
-		</div>
-	</footer>
-	
-	<header class="entry-header">
-		
-  
-    <h1 itemprop="name" class="entry-title">
-      <a class="article-title" href="/2017/12/14/hello-world/">Hello World</a>
-    </h1>
-  
-
-	</header>
-	<div class="entry-content">
-		
-    	<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
     
-	</div>
-	<footer class="entry-footer">
-		<div class="entry-meta-footer">
-			<span class="category">
-				
-			</span>
-			<span class="tags">
-				
-			</span>
-		</div>
-	</footer>
-	
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/14/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
 </article>
 
 
-	<hr class="article-devider">
 
-
-
-  
-  
 
     </div>
     <div class="mb-search">
