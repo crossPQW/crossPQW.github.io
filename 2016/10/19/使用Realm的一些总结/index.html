@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用Realm的一些总结 | crossPQW</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="###为什么我要用realm呢前段时间新开了一个项目,在做技术选型的时候,尝试了一下把数据存储这块从FMDB换为Realm,最初的理由就是觉得Realm很酷,后来用了一段时间之后发现自己的选择是明智的:  文档详细,甚至有中文版,当然中文版更新比较慢. 使用中遇到问题去Stackoverflow基本上都能找到,Realm团队回答也特别快. 查询速度超快(真正实现了懒加载,即用到时才从磁盘中查询).">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Realm的一些总结">
+<meta property="og:url" content="http://yoursite.com/2016/10/19/使用Realm的一些总结/index.html">
+<meta property="og:site_name" content="crossPQW">
+<meta property="og:description" content="###为什么我要用realm呢前段时间新开了一个项目,在做技术选型的时候,尝试了一下把数据存储这块从FMDB换为Realm,最初的理由就是觉得Realm很酷,后来用了一段时间之后发现自己的选择是明智的:  文档详细,甚至有中文版,当然中文版更新比较慢. 使用中遇到问题去Stackoverflow基本上都能找到,Realm团队回答也特别快. 查询速度超快(真正实现了懒加载,即用到时才从磁盘中查询).">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/290760-790baece0848503f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-14T15:07:21.411Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Realm的一些总结">
+<meta name="twitter:description" content="###为什么我要用realm呢前段时间新开了一个项目,在做技术选型的时候,尝试了一下把数据存储这块从FMDB换为Realm,最初的理由就是觉得Realm很酷,后来用了一段时间之后发现自己的选择是明智的:  文档详细,甚至有中文版,当然中文版更新比较慢. 使用中遇到问题去Stackoverflow基本上都能找到,Realm团队回答也特别快. 查询速度超快(真正实现了懒加载,即用到时才从磁盘中查询).">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/290760-790baece0848503f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="crossPQW" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/">Home</a></li><li><a href="/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-使用Realm的一些总结" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2016/10/19/使用Realm的一些总结/" class="article-date">
+  <time datetime="2016-10-19T07:39:40.000Z" itemprop="datePublished">2016-10-19</time>
+</a>
+		</span>
+		<span class="meta-elements author">黄少华</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      使用Realm的一些总结
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>###为什么我要用realm呢<br>前段时间新开了一个项目,在做技术选型的时候,尝试了一下把数据存储这块从<code>FMDB</code>换为<code>Realm</code>,最初的理由就是觉得<code>Realm</code>很酷,后来用了一段时间之后发现自己的选择是明智的:</p>
+<ul>
+<li><a href="https://realm.io/docs/objc/latest/#getting-started" target="_blank" rel="noopener">文档</a>详细,甚至有中文版,当然中文版更新比较慢.</li>
+<li>使用中遇到问题去Stackoverflow基本上都能找到,Realm团队回答也特别快.</li>
+<li>查询速度超快(真正实现了懒加载,即用到时才从磁盘中查询).</li>
+<li>相比FMDB,API友好到爆炸.</li>
+<li>跨平台(我司iOS安卓都用了Realm).</li>
+<li>提供了Mac版Realm Browser方便查看数据,Mac app store下载即可.</li>
+</ul>
+<p>###安装<br>当然你可以直接下载Realm库拖到项目中,不过由于墙的存在,直接在realm官网下载会比较慢,强烈推荐使用CocoaPods或者Carthage安装,只需要<code>pod &#39;Realm&#39;</code>或者在<code>Cartfile</code>中添加<code>github &quot;realm/realm-cocoa&quot;</code>即可.</p>
+<p>###使用</p>
+<p>#####创建数据库<br>最简单的方式,使用默认配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RLMRealm *realm = [RLMRealm defaultRealm];</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下,realm数据库存储在<code>Document</code>路径下,默认数据库文件名字是<code>default.realm</code>,当然你也可以自定义这些选项:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> // 使用默认的目录，但是使用用户名来替换默认的文件名 </span><br><span class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</span><br><span class="line">config.fileURL = [[[config.fileURL URLByDeletingLastPathComponent]  URLByAppendingPathComponent:@&quot;yourname&quot;] URLByAppendingPathExtension:@&quot;realm&quot;]; </span><br><span class="line">// 将这个配置应用到默认的 Realm 数据库当中</span><br><span class="line"> [RLMRealmConfiguration setDefaultConfiguration:config];</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下,realm是基于磁盘缓存的,但是假如我们有时候不想储存数据,又想需要灵活的进行数据读写,这时候我们可以创建一个内存数据库,创建内存数据库同样非常简单:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];</span><br><span class="line">//指定inMemoryIdentifier即可</span><br><span class="line">config.inMemoryIdentifier = @&quot;MyInMemoryRealm&quot;;</span><br><span class="line">RLMRealm *realm = [RLMRealm realmWithConfiguration:config error:nil];</span><br></pre></td></tr></table></figure></p>
+<p>但是用的时候我们要注意数据库实例被自动释放掉, 这就需要我们在app的生命周期内保持对realm内存数据库的强引用.</p>
+<p>#####构建基于realm的数据model<br>构建一个基于realm的数据model非常简单,只需要继承自<code>RLMObject</code>即可,当然你也可以通过Xcode插件直接新建一个Realm class,不过我还是习惯手动创建.<br>以我的项目为例,我们创建一个Book模型:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@interface Book :RLMObject</span><br><span class="line">@property (nonatomic, copy) NSString *ID;</span><br><span class="line">@property (nonatomic, copy) NSString *title;</span><br><span class="line">@property (nonatomic, copy) NSString *cover;</span><br><span class="line">@property (nonatomic, assign) long date;</span><br><span class="line">@property (nonatomic, strong) Day *firstDay;</span><br><span class="line">@property (nonatomic, strong) RLMArray &lt;Day *&gt; *days;</span><br><span class="line">@end</span><br><span class="line">RLM_ARRAY_TYPE(Day)</span><br><span class="line"></span><br><span class="line">@implementation Book</span><br><span class="line">+ (NSString *)primaryKey &#123;</span><br><span class="line">    return @&quot;ID&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//设置属性默认值</span><br><span class="line">+ (NSDictionary *)defaultPropertyValues&#123; </span><br><span class="line">    return @&#123;@&quot;title&quot;:@&quot;测试&quot; &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//设置忽略属性,即不存到realm数据库中</span><br><span class="line">+ (NSArray&lt;NSString *&gt; *)ignoredProperties &#123;</span><br><span class="line">    return @[@&quot;days&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//一般来说,属性为nil的话realm会抛出异常,但是如果实现了这个方法的话,就只有name为nil会抛出异常,也就是说现在cover属性可以为空了</span><br><span class="line">+ (NSArray *)requiredProperties &#123; </span><br><span class="line">    return @[@&quot;name&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//设置索引,可以加快检索的速度</span><br><span class="line">+ (NSArray *)indexedProperties &#123;</span><br><span class="line">    return @[@&quot;ID&quot;];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>在这个Book模型中,有<code>ID,title,cover,date,days</code>这几个字段,realm支持<code>BOOL,bool,int,NSInteger,long,long long,float,double,NSString,NSDate,NSData</code><br> 以及 <a href="https://realm.io/cn/docs/objc/latest/#optional-properties" target="_blank" rel="noopener">被特殊类型标记的</a> NSNumber这些类型.</p>
+<ul>
+<li>Tips:如果想存储图片的话,可以把<code>UIImage</code>转为<code>NSData</code>存储,当然Realm限制了单个图片大小为16M,所以最好的测试是手动把图片存储到磁盘,然后Realm只尺寸图片的url,url可以是远程url或者本地的路径.</li>
+</ul>
+<p>通过<code>days</code>这个字段可以看到realm实现To-One或者To-Many关系很简单,创建一对一关系的话直接定义为property即可,创建一对多关系的话,使用<code>RLM_ARRAY_TYPE</code>宏创建协议,然后定义<code>RLMArray&lt;Day*&gt;</code>类型就行啦.<br>通过<code>primaryKey</code>我们可以给model设置一个主键,这对于我们进行添加数据与更新数据的时候很有帮助,比如我们想要添加或者修改一条数据的话,只需要在事务中操作即可:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Book *book = [[Book alloc] init];</span><br><span class="line">book.ID = @&quot;ABCDEFG&quot;;</span><br><span class="line">book.title = @&quot;威尼斯之行&quot;;</span><br><span class="line">book.cover = @&quot;www.google.com&quot;;</span><br><span class="line">//添加数据</span><br><span class="line">RLMRealm *realm = [RLMRealm defaultRealm];</span><br><span class="line">[realm beginWriteTransaction];</span><br><span class="line">[realm addObject:book];</span><br><span class="line">[realm commitWriteTransaction];</span><br><span class="line"></span><br><span class="line">//修改数据</span><br><span class="line">[realm beginWriteTransaction];</span><br><span class="line">book.title = @&quot;美西之行&quot;;</span><br><span class="line">[realm commitWriteTransaction];</span><br></pre></td></tr></table></figure></p>
+<p>如果我们设置了主键(primaryKey),就可以直接这样,直接调用<code>createOrUpdateInRealm:realm</code>函数,如果ID为<code>ABCDEFG</code>的Book对象已经存在,那么对象就会直接更新,如果不存在,就会创建一个,这一点特别像在写rails的时候操作数据库的方法,非常方便<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Book *book = [[Book alloc] init];</span><br><span class="line">book.ID = @&quot;ABCDEFG&quot;;</span><br><span class="line">book.title = @&quot;美西之旅&quot;;</span><br><span class="line">book.cover = @&quot;www.apple.com&quot;;</span><br><span class="line">[realm beginWriteTransaction];</span><br><span class="line">[Book createOrUpdateInRealm:realm withValue:book];</span><br><span class="line">[realm commitWriteTransaction];</span><br><span class="line"></span><br><span class="line">//还可以这样,直接通过键值对进行更新</span><br><span class="line">[realm beginWriteTransaction];</span><br><span class="line">[Book createOrUpdateInRealm:realm withValue:@&#123;@&quot;ID&quot;: @&quot;ABCDEFG&quot;, @&quot;title&quot;: @&quot;美西之旅&quot;&#125;];</span><br><span class="line">[realm commitWriteTransaction];</span><br></pre></td></tr></table></figure></p>
+<p>###Realm数据库的CURD</p>
+<p>#####C(create) &amp; U(update)<br>其实在上面我们已经简单的说过创建跟更新的方法了,一般来说如果你设置了主键的话,会用的最多的基本上就是<code>createOrUpdateInRealm</code>方法,而且项目中我们一般面向对象编程,会把键值对,json等数据使用一些类似<code>Mantle,YYModel</code>的工具转换为对象,所以其他类似于通过字典创建更新数据,支持属嵌套属性(Nested Object)的创建等功能就不多细说了.</p>
+<p>#####R(Retrieve)读取数据<br>Realm的数据查询非常强大,基本上接触过<code>谓词NSPredicate</code>之后都可以快速上手,查询的结果存储为<code>RLMResults&lt;model*&gt;</code>的容器,其实这玩意完全可以当做<code>NSArray</code>来用,同样支持下标操作,支持快速遍历,不同的是<code>RLMResult</code>需要指定类型,比如<code>RLMResult&lt;Book*&gt;</code>就是包含多个book的集合,另外我们开篇提到的Realm是懒加载的,也就是说查询到的结果只会在被确定访问某个属性的时候才去读取,否则我们的查询操作将会被延迟执行.<br>接下来我们举几个查询的例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//从默认数据库查询所有的书</span><br><span class="line">RLMResults&lt;Book *&gt; *books = [Book allObjects];</span><br><span class="line"></span><br><span class="line">//使用断言字符串查询</span><br><span class="line">RLMResults&lt;Book *&gt; *books = [Book objectsWhere:@&quot;title = &apos;美西之旅 AND cover = &apos;www.apple.com&apos;&apos;&quot;]</span><br><span class="line"></span><br><span class="line">//使用NSPredicate查询</span><br><span class="line">NSPredicate *pred = [NSPredicate predicateWithFormat:@&quot;title = &apos;美西之旅 AND cover = &apos;www.apple.com&apos;&apos;&quot;];</span><br><span class="line">books = [Book objectsWithPredicate:pred];</span><br><span class="line"></span><br><span class="line">//链式查询</span><br><span class="line">RLMResults&lt;Book *&gt; *books = [Book objectsWhere:@&quot;title = &apos;美西之旅&apos;&quot;];</span><br><span class="line">RLMResults&lt;Book *&gt; *otherBooks = [books objectsWhere:@&quot;cover = &apos;www.apple.com&apos;&quot;];</span><br><span class="line"></span><br><span class="line">//排序</span><br><span class="line">//按照data从大到小进行排序</span><br><span class="line">RLMResults&lt;Book *&gt; *sortedBooks = [[Book objectsWhere:@&quot;title = &apos;美西之旅&apos; &quot;] sortedResultsUsingProperty:@&quot;date&quot; ascending:YES];</span><br></pre></td></tr></table></figure></p>
+<p>Tips1:有时候我们确实想使用<code>NSArray</code>而不是<code>RLMArray</code>或者<code>RLMResult</code>,我们可以简单的进行遍历转换:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//假设这是我们查询到的结果</span><br><span class="line">RLMResult&lt;Day*&gt;days;</span><br><span class="line">NSMutableArray *array = [NSMutableArray array];</span><br><span class="line">    for (Day *day in days) &#123;</span><br><span class="line">        [array addObject:day];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Tips2:写程序的时候前人一直告诉我们DRY原则(Dont Repeat Yourself),每次写<code>beginWriteTransaction</code>跟<code>commitWriteTransaction</code>也确实很让人烦,我们可以稍微封装一个方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)update:(void (^)())block &#123;</span><br><span class="line">    [self.realm beginWriteTransaction];</span><br><span class="line">    block();</span><br><span class="line">    [self.realm commitWriteTransaction];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样用的时候就可以这么用:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[book update:^&#123;</span><br><span class="line">     book.cover = @&quot;new cover&quot;;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure></p>
+<p>更多关于断言的使用比如== ,&lt;=,&gt;=,AND,BETWEEN BEGINSWITH等使用方法可以查看<a href="https://realm.io/news/nspredicate-cheatsheet/" target="_blank" rel="noopener">这里的文档</a></p>
+<p>#####D(Delete)删除数据<br>在realm中想要删除数据非常简单,假设我们有一个book模型需要删除,只需要:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//删除单条记录</span><br><span class="line">[realm beginWriteTransaction];</span><br><span class="line">[realm deleteObject:book];</span><br><span class="line">[realm commitWriteTransaction];</span><br><span class="line"></span><br><span class="line">//清空realm数据库,清空后Realm文件不会释放掉所占用的空间,这是为了保留空间以便日后提高存储速度</span><br><span class="line">[realm beginWriteTransaction];</span><br><span class="line">[realm deleteAllObjects];</span><br><span class="line">[realm commitWriteTransaction];</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看到,大多数操作都是在一个事务中进行的,如果在错误的事务中进行了数据的操作,realm会抛出异常.</p>
+<p>###Realm中的线程<br>首先单个线程中,我们当然无需考虑并发或者多线程处理的问题,也无需考虑线程锁,我们唯一的修改的操作也是在对象自己的realm事务中.<br>需要特别注意的一点是,我们不能让多个线程拥有同一个Realm对象的实例.<br>如果想要跨线程使用数据库的话,我们需要在每个线程都去初始化一个新的Realm实例,如果都是执行的同一个数据库的话,这些实例都是指向磁盘的同一个文件的.<br>Realm官方给了一个结合GCD(大中枢派发233333)大批量写入数据的例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">dispatch_async(queue, ^&#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        // 在这个线程中获取 Realm 和表实例</span><br><span class="line">        RLMRealm *realm = [RLMRealm defaultRealm];</span><br><span class="line">        </span><br><span class="line">        // 通过开启写入操作将写入闭包分成多个微小部分</span><br><span class="line">        for (NSInteger idx1 = 0; idx1 &lt; 1000; idx1++) &#123;</span><br><span class="line">            [realm beginWriteTransaction];</span><br><span class="line">            </span><br><span class="line">            // 通过字典插入行，忽略属性次序</span><br><span class="line">            for (NSInteger idx2 = 0; idx2 &lt; 1000; idx2++) &#123;</span><br><span class="line">                [Person createInRealm:realm</span><br><span class="line">                            withValue:@&#123;@&quot;name&quot;      :  randomString,</span><br><span class="line">                                        @&quot;birthdate&quot; : randomDate&#125;];</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            // 提交写入事务以确保数据在其他线程可用</span><br><span class="line">            [realm commitWriteTransaction];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>###对JSON的支持<br>很遗憾Realm并不直接支持JSON(那你说个卵啊~)…<br>我们可以使用系统自带的系列化函数来序列化JSON数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSData *data = [@&quot;&#123;\&quot;name\&quot;: \&quot;旧金山\&quot;, \&quot;cityId\&quot;: 123&#125;&quot; dataUsingEncoding: NSUTF8StringEncoding];</span><br><span class="line">[realm transactionWithBlock:^&#123; </span><br><span class="line">    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL]; </span><br><span class="line">    [City createOrUpdateInRealm:realm withValue:json];&#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure></p>
+<p>当然其实真正的工作中我们一般也不这么来搞,一般会用<code>Mantle,YYModel</code>等其他类似工具将json转换为对象之后直接进行存储,后面我也打算写一些Realm+YYModel的使用心得.</p>
+<p>###如何查看存储在Realm中的数据<br><strong>如果使用模拟器进行调试,可以通过</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[RLMRealmConfiguration defaultConfiguration].fileURL</span><br></pre></td></tr></table></figure></p>
+<p>打印出Realm 数据库地址,然后在Finder中<code>⌘⇧G</code>跳转到对应路径下,用Realm Browser打开对应的<code>.realm</code>文件就可以看到数据啦.<br><strong>使用真机调试的话</strong><br>Xcode-&gt;Window-&gt;Devices(<code>⌘⇧2</code>),然后找到对应的设备与项目,点击<code>Download Container</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/290760-790baece0848503f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"><br>导出xcappdata文件后,显示包内容,进到<code>AppData-&gt;Documents</code>,使用<code>Realm Browser</code>打开<code>.realm</code>文件即可.</p>
+<p>###遇到的一些坑或者不爽的地方<br>当然,这么一个还算比较新的工具说是完美的肯定是不可能,我在使用中也在经常地骂娘,虽然后来发现好多是使用姿势不对23333</p>
+<ol>
+<li>所有的操作都要在事务中,麻烦,不过我们可以像文中tips那样进行小小的封装.</li>
+<li>要时刻注意操作的是不是同一个realm实例,不然会crash,crash log中,iOS跟安卓一样,90%的crash都是跟realm有关😭,还要注意对象是否可用,这个我们可以用<code>invalidated</code>字段来判断,也算是防御式编程了23333….</li>
+<li>写数据迁移(migrate)不算太友好,不太喜欢,长期下来,迁移的代码画美不看……也可能是自己功力不够,所以文章中自己也没写关于迁移的内容,想要了解的可以看官方的migrate demo,什么时候移动端写数据迁移能像写rails那么爽就好了….</li>
+<li>跨线程传递数据还算麻烦,不过可以接受.</li>
+<li>realm对象如果调用<code>class</code>方法会返回类似于<code>RLMAccessor_2_Day</code>的结果,而不是预想的<code>Day</code>,这点注意一下就好.</li>
+<li><code>Realm</code>是<code>C++</code>实现的,所以看着一堆<code>.mm</code>的源码,对我来说基本不会产生去阅读.的想法</li>
+</ol>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/21/使用Realm+YYModel+AFNetworking构建一个简易的app/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          使用Realm+YYModel+AFNetworking构建一个简易的app
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/15/iOS9新特性の3D-touch-下篇/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          iOS9新特性の3D-touch-下篇
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/">crossPQW</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2017 黄少华<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div>
+</body>
+</html>
